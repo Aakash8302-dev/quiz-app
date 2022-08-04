@@ -1,25 +1,27 @@
+const path = require('path');
+const dotenv = require("dotenv");
 const express = require("express");
 const userRoutes = require("./routes/userRoutes.js")
 const questionRoutes = require("./routes/questionRoutes.js")
 
 const { errorHandler, notFound } = require("./middlewares/errorMiddleware.js")
-const dotenv = require("dotenv");
 const connectDB = require('./utils/db.js');
 
-connectDB();
-const app = express();
-app.use(express.json());
 
 dotenv.config();
+connectDB();
 
-app.get("/", (req, res) => {
-    res.json("Server is running");
-});
+const app = express();
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '/client/build')));
 
 
 app.use("/api/user/", userRoutes);
 app.use("/api/question/", questionRoutes);
 
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 app.use(notFound);
 app.use(errorHandler);
