@@ -11,7 +11,7 @@ const AdminLoginScreen = () => {
 
     useEffect(() => {
         if (userInfo && userInfo.token) {
-            navigate("/create");
+            navigate("/admin");
         }
     }, [userInfo, navigate]);
 

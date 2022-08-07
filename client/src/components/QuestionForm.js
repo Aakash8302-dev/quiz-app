@@ -48,6 +48,11 @@ const style = {
     fieldBranch: {
         margin: '0.5rem 0',
     },
+    formWrap: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    }
 };
 
 
@@ -79,7 +84,7 @@ const QuestionForm = ({
 
 
     return questions.map((ques, i) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} sx={{ ...style.formWrap }}>
             <Paper
                 sx={{ ...style.root }}
                 elevation={2}>

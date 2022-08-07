@@ -34,13 +34,16 @@ const userAnswerSchema = mongoose.Schema({
     },
     answers: [
         {
-            questionText: {
+            questionTitle: {
                 type: String,
             },
             questionSet: {
                 type: String,
             },
             questionDept: {
+                type: String,
+            },
+            questionCategory: {
                 type: String,
             },
             options: [

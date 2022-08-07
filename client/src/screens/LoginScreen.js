@@ -20,7 +20,7 @@ const LoginScreen = () => {
 
     useEffect(() => {
         if (userInfo && userInfo.token) {
-            navigate("/test");
+            navigate("/student");
         }
     }, [userInfo, navigate]);
 

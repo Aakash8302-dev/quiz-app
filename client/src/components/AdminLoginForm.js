@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
-import { Grid, TextField, Box, styled, MenuItem, Button, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Grid, TextField, Box, styled, MenuItem, FormHelperText, Button, Typography, Container, InputAdornment, InputLabel, FormControl, OutlinedInput, IconButton } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useDispatch, useSelector } from "react-redux"
 import { useForm, Form } from './useForm'
 import { userRegister } from '../features/user'
@@ -13,22 +14,33 @@ const Item = styled(Box)(({ theme }) => ({
 }))
 
 const initialValues = {
-    name: '',
-    email: '',
     regNo: '',
-    dept: ''
+    password: '',
+}
+
+const style = {
+    root: {
+        textAlign: 'center',
+        padding: '1rem 0',
+    },
+    formWrap: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '2rem 0'
+    }
 }
 
 const AdminLoginForm = () => {
 
     const dispatch = useDispatch()
 
+    const [showPassword, setShowPassword] = useState(true);
+
     const validate = () => {
         let temp = {}
-        temp.name = values.name ? "" : "This field is required"
-        temp.email = (/@/).test(values.email) ? "" : "Enter valid email "
-        temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13) ? "" : "Enter valid number"
-        temp.dept = values.dept.length !== 0 ? "" : "This field is required"
+        temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13) ? "" : "Enter valid RegNo"
+        temp.password = values.password ? "" : "Enter valid password"
 
         setErrors({
             ...temp
@@ -48,56 +60,57 @@ const AdminLoginForm = () => {
         }
     }
 
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <Form onSubmit={handleSubmit}>
-            <Grid container>
-                <Typography variant="h4">Admin Login</Typography>
-                <Grid item>
+            <Container sx={{ ...style.root }} >
+                <Typography variant="h4">ADMIN</Typography>
+                <Grid item sx={{ ...style.formWrap }}>
                     <Item>
                         <TextField
                             variant="outlined"
-                            label='Name'
-                            name="name"
-                            value={values.name}
-                            onChange={handleInputChange}
-                            {...(errors ? { error: (errors.name ? true : false), helperText: errors.name } : false)}
-                        />
-                        <TextField
-                            variant="outlined"
-                            label='Email'
-                            name="email"
-                            email={true}
-                            value={values.email}
-                            onChange={handleInputChange}
-                            {...(errors ? { error: (errors.email ? true : false), helperText: errors.email } : false)}
-                        />
-                        <TextField
-                            variant="outlined"
-                            label='Register Number'
+                            label='Register No'
                             name="regNo"
+                            email={true}
                             value={values.regNo}
                             onChange={handleInputChange}
                             {...(errors ? { error: (errors.regNo ? true : false), helperText: errors.regNo } : false)}
                         />
-                        <TextField
-                            variant="outlined"
-                            select
-                            label='Branch'
-                            name='dept'
-                            value={values.dept}
-                            onChange={handleInputChange}
-                            {...(errors ? { error: (errors.dept ? true : false), helperText: errors.dept } : false)}
-                        >
-                            {branches.map((e) => (
-                                <MenuItem key={e.id} value={e.value}>
-                                    {e.value}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        <FormControl variant='outlined'>
+                            <TextField
+                                id='outlined-adornment-password'
+                                type={showPassword ? 'password' : 'text'}
+                                value={values.password}
+                                variant="outlined"
+                                name="password"
+                                onChange={handleInputChange}
+                                {...(errors ? { error: (errors.password ? true : false), helperText: errors.password } : false)}
+                                endAdornment={
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label='toggle password visibility'
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge='end'
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label='Password'
+                            />
+                        </FormControl>
                         <Button type="submit" variant="contained">Submit</Button>
                     </Item>
                 </Grid>
-            </Grid>
+            </Container>
         </Form>
     )
 }

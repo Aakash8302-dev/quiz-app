@@ -3,6 +3,7 @@ const User = require('../models/userModel.js');
 const UserAnswer = require('../models/userAnswerModel.js')
 const UserFeedback = require('../models/userFeedbackModel.js');
 const generateToken = require("../utils/generateToken.js");
+const bcrypt = require('bcryptjs')
 
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -18,6 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
                 regNo: exists.regNo,
                 email: exists.email,
                 dept: exists.dept,
+                role: exists.role,
                 isVolunteer: exists.isVolunteer,
                 token: generateToken(exists._id),
             });
@@ -51,6 +53,65 @@ const registerUser = asyncHandler(async (req, res) => {
     } catch (error) {
         res.status(400);
         throw new Error(error);
+    }
+});
+
+const registerAdmin = asyncHandler(async (req, res) => {
+    const { name, email, regNo, dept, role, password } = req.body;
+
+    const userExists = await User.findOne({ $and: [{ regNo }, { role }] });
+
+    if (userExists) {
+        res.status(403);
+        throw new Error('User Already Exists');
+    }
+
+    const user = await User.create({
+        name,
+        email,
+        regNo,
+        dept,
+        role,
+        password,
+    });
+
+    if (user) {
+        res.status(201).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            regNo: user.regNo,
+            dept: user.dept,
+            password: user.password,
+            role: user.role,
+            token: generateToken(user._id),
+        });
+    } else {
+        res.status(400);
+        throw new Error('Invalid user data');
+    }
+});
+
+const loginAdmin = asyncHandler(async (req, res) => {
+    const { regNo, password } = req.body;
+
+    const role = "admin"
+
+    const user = await User.findOne({ $and: [{ regNo }, { role }] });
+
+    if (user && (await user.matchPassword(password))) {
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            regNo: user.regNo,
+            dept: user.dept,
+            role: user.role,
+            token: generateToken(user._id),
+        });
+    } else {
+        res.status(401);
+        throw new Error('Invalid UserID or Password');
     }
 });
 
@@ -155,19 +216,60 @@ const getFeedback = asyncHandler(async (req, res) => {
 const getLeaderBoard = asyncHandler(async (req, res) => {
 
     try {
-        const { scoreList } = await UserAnswer.find({});
+        const data = await UserAnswer.find();
 
-        var sortedLeaderboard = [];
+        const sort = (arr) => {
+            for (var i = 0; i < arr.length; i++) {
+                for (var j = 0; j < arr.length - i - 1; j++) {
+                    if (arr[j].totalScore < arr[j + 1].totalScore) {
+                        var temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
 
-        sortedLeaderboard = scoreList.totalScore.sort();
+            return arr;
+        };
 
-        res.status(200).json({ sortedLeaderboard });
+
+        sortedLeaderboard = sort(data)
+
+        if (sortedLeaderboard) {
+            res.status(200).json(sortedLeaderboard);
+        }
+
 
     } catch (error) {
-        res.status(400);
-        throw new Error(error);
+        res.status(500).json({
+            error: error.message
+        });;
     }
 
 })
 
-module.exports = { registerUser, submitAnswer, getResult, createFeedback, getFeedback, getLeaderBoard }
+const checkSubmission = asyncHandler(async (req, res) => {
+
+    try {
+        const answer = await UserAnswer.find({ regNo: req.user.regNo })
+
+        if (answer.length > 0) {
+            res.status(200).json({
+                exists: "submitted",
+                answer
+            })
+        } else {
+            res.status(200).json({
+                exists: "notSubmitted"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+
+
+})
+
+module.exports = { registerUser, registerAdmin, loginAdmin, submitAnswer, getResult, createFeedback, getFeedback, getLeaderBoard, checkSubmission }

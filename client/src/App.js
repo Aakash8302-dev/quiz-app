@@ -5,17 +5,29 @@ import LoginScreen from './screens/LoginScreen';
 import AdminLoginScreen from './screens/AdminLoginScreen';
 import TestScreen from './screens/TestScreen';
 import CreateScreen from './screens/CreateScreen';
+import AdminScreen from './screens/AdminScreen';
+import StudentScreen from './screens/StudentScreen';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ['Poppins', 'sans-serif'].join(','),
+  },
+});
 
 function App() {
   return (
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<LoginScreen />} exact />
-        <Route path="/test" element={<TestScreen />} />
-        <Route path="/create" element={<CreateScreen />} />
-        <Route path="/admin" element={<AdminLoginScreen />} />
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <Routes>
+          <Route path="/" element={<LoginScreen />} exact />
+          <Route path="/student" element={<StudentScreen />} />
+          <Route path="/create" element={<CreateScreen />} />
+          <Route path="/alogin" element={<AdminLoginScreen />} />
+          <Route path="/admin" element={<AdminScreen />} />
+        </Routes>
+      </ThemeProvider>
     </Router>
   );
 }

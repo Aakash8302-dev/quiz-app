@@ -46,7 +46,7 @@ const getQuestionById = asyncHandler(async (req, res) => {
         res.json(question);
     } else {
         res.status(404);
-        throw new Error('Quesion not Found');
+        throw new Error('Question not Found');
     }
 })
 
@@ -121,17 +121,6 @@ const getTestQuestions = asyncHandler(async (req, res) => {
 
 });
 
-const getAllQuestions = asyncHandler(async (req, res) => {
-    try {
-        const questions = await Question.find({})
-
-        res.json(questions)
-
-    } catch (error) {
-        throw new Error(error);
-    }
-});
-
 const submitAnswers = asyncHandler(async (req, res) => {
     try {
 
@@ -185,4 +174,16 @@ const submitAnswers = asyncHandler(async (req, res) => {
     }
 })
 
-module.exports = { createQuestion, getQuestionById, updateQuestion, deleteQuestion, getTestQuestions, getAllQuestions, submitAnswers }
+const getCreatedQuestions = asyncHandler(async (req, res) => {
+    const data = await Question.find();
+
+    if (data) {
+        res.status(200).json(data)
+    } else {
+        res.status(500).json({
+            error: "error"
+        })
+    }
+})
+
+module.exports = { createQuestion, getQuestionById, updateQuestion, deleteQuestion, getTestQuestions, submitAnswers, getCreatedQuestions }
