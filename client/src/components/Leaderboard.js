@@ -45,25 +45,37 @@ const useStyles = makeStyles({
 });
 
 const LeaderBoard = () => {
-    const [department, setDepartment] = useState('All');
+    const [department, setDepartment] = useState("All");
 
-    const leaderboard = useSelector((state) => state.leaderBoard);
-    const { leaderboardInfo, loading } = leaderboard;
+    const leaderboard = useSelector((state) => state.user.leaderboard);
+    const loading = useSelector((state) => state.user.status)
+
+    var filteredLeaderboard;
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        alert();
         dispatch(getLeaderBoard());
+        setDepartment("All")
     }, []);
 
-    var filteredLeaderboard;
 
-    if (department === 'All') {
-        filteredLeaderboard = leaderboardInfo;
-    } else {
-        filteredLeaderboard =
-            leaderboardInfo && leaderboardInfo.filter((q) => q.dept === department);
-    }
+    useEffect(() => {
+
+        console.log(department)
+
+        if (department === 'All') {
+            filteredLeaderboard = leaderboard;
+        } else {
+            filteredLeaderboard =
+                leaderboard && leaderboard.filter((q) => q.dept === department);
+        }
+    }, [department, leaderboard])
+
+
+
+
 
     const classes = useStyles();
 
@@ -72,7 +84,7 @@ const LeaderBoard = () => {
             {loading && <Loader />}
             <div className={classes.header}>
                 <Typography variant='h5' className={classes.title}>
-                    LeaderBoard
+                    LeaderBoardssss
                 </Typography>
                 <TextField
                     select

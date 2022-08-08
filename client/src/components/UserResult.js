@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Box, Button, Stack } from '@mui/material'
+import { Typography, Box as Container, Button, Stack } from '@mui/material'
 import { useSelector } from 'react-redux'
 import PieChart, {
     Series,
@@ -16,6 +16,7 @@ const UserResult = ({ setComponent }) => {
     const style = {
         root: {
             textAlign: 'center',
+            padding: "2rem 0"
         },
         btn: {
             margin: "2rem 0"
@@ -25,16 +26,34 @@ const UserResult = ({ setComponent }) => {
         }
     }
 
+    const totalQuestions = 12;
+    const totalCore = 3;
+    const totalAptitude = 3;
+    const totalVerbal = 3;
+    const totalCoding = 3
+    var incorrect
+
+    let aptitudeScore = answer.aptitudeScore;
+    let verbalScore = answer.verbalScore;
+    let codingScore = answer.codingScore;
+    let coreScore = answer.coreScore;
+
+    incorrect = totalQuestions - (aptitudeScore + verbalScore + codingScore + coreScore);
+
+
+
+
     const areas = [
-        { name: "india", value: 20 },
-        { name: "France", value: 30 },
-        { name: "England", value: 40 },
-        { name: "Scotland", value: 10 },
+        { name: "Core", value: coreScore },
+        { name: "Aptitude", value: aptitudeScore },
+        { name: "Verbal", value: verbalScore },
+        { name: "Coding", value: codingScore },
+        { name: "Incorrect", value: incorrect }
     ]
 
     return (
-        <Box sx={{ ...style.root }}>
-            <Stack spacing={2} >
+        <Container sx={{ ...style.root }}>
+            <Stack spacing={1} >
                 <Typography variant="h5">NAME : {answer.name.toUpperCase()}</Typography>
                 <Typography variant="h5">REG NO : {answer.regNo}</Typography>
                 <PieChart
@@ -57,12 +76,12 @@ const UserResult = ({ setComponent }) => {
                         </Label>
                     </Series>
 
-                    <Size width={400} />
+                    <Size width={350} />
                 </PieChart>
                 <Typography variant="h5">Total Score : {answer.totalScore}</Typography>
             </Stack>
             <Button type="button" sx={{ ...style.btn }} variant="contained" onClick={() => setComponent("userAnswer")}>Check Answers</Button>
-        </Box>
+        </Container>
     )
 }
 

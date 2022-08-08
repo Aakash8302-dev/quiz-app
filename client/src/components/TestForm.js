@@ -118,7 +118,7 @@ const TestForm = ({ history, questions }) => {
                     sx={{ ...style.modal }}
                 >
                     <Typography variant='h6' sx={{ ...style.modal.title }} >
-                        Do you Want to Submit ?
+                        Do you want to submit ?
                     </Typography>
                     <Box sx={{ ...style.modal.footer }} >
                         <Button>No</Button>
@@ -139,7 +139,7 @@ const TestForm = ({ history, questions }) => {
                                             /{answers.length}
                                         </span>
                                     </Typography>
-                                    <Typography variant='h6'>
+                                    <Typography variant='h6' sx={{ fontWeight: "bold" }}>
                                         {ques.questionCategory.toUpperCase()}
                                     </Typography>
                                 </Box>

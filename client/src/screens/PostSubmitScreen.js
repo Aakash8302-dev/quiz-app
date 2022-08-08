@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Grid } from '@mui/material'
+import { Container as Box, Grid } from '@mui/material'
 import FeedbackForm from '../components/FeedbackForm'
 import UserResult from '../components/UserResult';
 import UserAnswer from '../components/UserAnswer';
@@ -17,18 +17,19 @@ const style = {
 
 
 const PostSubmitScreen = () => {
-
+    console.log("Post Submit")
     const [component, setComponent] = useState("resultFeedback")
 
 
-    const resultFeedback = <Grid container sx={{ ...style.root }}>
-        <Grid item md={6} xs={12} sx={{ ...style.sectionWrap }}>
-            <UserResult setComponent={setComponent} />
+    const resultFeedback =
+        <Grid container sx={{ ...style.root }}>
+            <Grid item md={6} xs={12} sx={{ ...style.sectionWrap }}>
+                <UserResult setComponent={setComponent} />
+            </Grid>
+            <Grid item md={6} xs={12} sx={{ ...style.sectionWrap }}>
+                <FeedbackForm />
+            </Grid>
         </Grid>
-        <Grid item md={6} xs={12} sx={{ ...style.sectionWrap }}>
-            <FeedbackForm />
-        </Grid>
-    </Grid>
 
     const renderSwitch = (param) => {
         switch (param) {

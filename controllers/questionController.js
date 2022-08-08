@@ -152,6 +152,7 @@ const submitAnswers = asyncHandler(async (req, res) => {
             dept: req.user.dept,
             regNo: req.user.regNo,
             userId: req.user._id,
+            role: req.user.role,
             totalScore: score,
             aptitudeScore,
             verbalScore,

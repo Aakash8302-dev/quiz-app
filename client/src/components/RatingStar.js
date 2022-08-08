@@ -31,7 +31,7 @@ const RatingStar = ({ setRating, setHover, rating, hover }) => {
                 const ratingValue = i + 1;
 
                 return (
-                    <label >
+                    <label key={i} >
                         <Input
                             sx={{ ...classes.input }}
                             type='radio'

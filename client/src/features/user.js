@@ -8,7 +8,8 @@ const initialState = {
     status: 'idle',
     error: null,
     userAnswer: null,
-    leaderboard: null
+    leaderboard: null,
+    feedbackStatus: null
 }
 
 export const userRegister = createAsyncThunk('user/register', async (userData, thunkAPI) => {
@@ -31,6 +32,25 @@ export const userRegister = createAsyncThunk('user/register', async (userData, t
     } catch (error) {
         return error.message
     }
+})
+
+export const userFeedback = createAsyncThunk('/user/feedback', async ({ review, rating, difficulty }, thunkAPI) => {
+    var { user: { value } } = thunkAPI.getState()
+    var userInfo = value.token
+
+
+    const { data } = await axios.post('/api/user/feedback', { review, rating, difficulty }, {
+        headers: {
+            Authorization: `Bearer ${userInfo}`,
+        },
+    })
+
+    if (data.error) {
+        throw new Error(data.error)
+    } else {
+        return data
+    }
+
 })
 
 export const checkSubmission = createAsyncThunk('/user/checkSubmission', async (answers, thunkAPI) => {
@@ -96,6 +116,7 @@ export const userSlice = createSlice({
             state.userAnswer = action.payload
         }).addCase(checkSubmission.rejected, (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         }).addCase(getLeaderBoard.pending, (state, action) => {
             state.status = "loading"
         }).addCase(getLeaderBoard.fulfilled, (state, action) => {
@@ -103,6 +124,13 @@ export const userSlice = createSlice({
             state.leaderboard = action.payload
         }).addCase(getLeaderBoard.rejected, (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
+        }).addCase(userFeedback.pending, (state, action) => {
+            state.feedbackStatus = "loading"
+        }).addCase(userFeedback.fulfilled, (state, action) => {
+            state.feedbackStatus = "succeeded"
+        }).addCase(userFeedback.rejected, (state, action) => {
+            state.feedbackStatus = "failed"
             state.error = action.error.message
         })
     }

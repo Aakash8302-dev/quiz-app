@@ -5,6 +5,7 @@ import { userRegister } from '../features/user'
 import { useForm, Form } from './useForm'
 import { branches } from '../data'
 import RatingStar from './RatingStar'
+import { userFeedback } from '../features/user'
 
 
 const Item = styled(Box)(({ theme }) => ({
@@ -16,10 +17,7 @@ const Item = styled(Box)(({ theme }) => ({
 
 
 const initialValues = {
-    name: '',
-    email: '',
-    regNo: '',
-    dept: ''
+    review: '',
 }
 
 
@@ -34,10 +32,7 @@ const FeedbackForm = () => {
 
     const validate = () => {
         let temp = {}
-        temp.name = values.name ? "" : "This field is required"
-        temp.email = (/@/).test(values.email) ? "" : "Enter valid email "
-        temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13) ? "" : "Enter valid number"
-        temp.dept = values.dept.length !== 0 ? "" : "This field is required"
+        temp.review = values.review ? "" : "This field is required"
 
         setErrors({
             ...temp
@@ -51,9 +46,11 @@ const FeedbackForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        values.rating = rating;
+        values.difficulty = difficulty;
+
         if (validate()) {
-            values.role = "student"
-            dispatch(userRegister(values))
+            dispatch(userFeedback(values))
         }
     }
 
@@ -63,6 +60,7 @@ const FeedbackForm = () => {
                 <Grid item>
                     <Item>
                         <Stack spacing={3}>
+                            <Typography variant='h5' sx={{ textAlign: "center", }}>Give us your Feedback</Typography>
                             <Box component='div'>
                                 <Typography variant='h6'>How would you rate your experience with software ?</Typography>
                                 <RatingStar
@@ -87,15 +85,15 @@ const FeedbackForm = () => {
                                     multiline
                                     minRows={5}
                                     label='Suggestions'
-                                    name="suggestions"
+                                    name="review"
                                     sx={{ '& .MuiOutlinedInput-root': { width: '100%' } }}
-                                    value={values.suggestions}
+                                    value={values.review}
                                     onChange={handleInputChange}
-                                    {...(errors ? { error: (errors.suggestions ? true : false), helperText: errors.suggestions } : false)}
+                                    {...(errors ? { error: (errors.review ? true : false), helperText: errors.review } : false)}
                                 />
                             </Box>
                         </Stack>
-                        <Button sx={{ margin: "1rem 0" }} type="submit" variant="contained">Submit</Button>
+                        <Button sx={{ margin: "1rem 0" }} type="submit" variant="contained" onClick={handleSubmit}>Submit</Button>
                     </Item>
                 </Grid>
             </Grid>

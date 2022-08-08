@@ -96,7 +96,7 @@ const LoginForm = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
-                        <Button type="submit" variant="contained">Submit</Button>
+                        <Button sx={{ margin: "1rem 0" }} type="submit" variant="contained">BEGIN TEST</Button>
                     </Item>
                 </Grid>
             </Grid>

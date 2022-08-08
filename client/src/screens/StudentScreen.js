@@ -17,14 +17,16 @@ const StudentScreen = () => {
     const userInfo = useSelector((state) => state.user.value)
 
     useEffect(() => {
-
         if (userInfo === null) {
             navigate('/');
+        } else {
+            if (userInfo.role === "admin")
+                navigate('/alogin')
         }
 
         dispatch(checkSubmission())
 
-    }, [userInfo, navigate])
+    }, [userInfo])
 
     return (
         <Box>

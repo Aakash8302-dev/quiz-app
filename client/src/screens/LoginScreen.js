@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
-import { Container, Grid } from '@mui/material'
+import { Container, Grid, Typography, Stack, Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import LoginForm from '../components/LoginForm'
 
 const style = {
     formWrap: {
-        display: "flex",
-        justifyContent: "center",
-        alignItem: "center",
+        position: "absolute",
+        top: "38%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
         margin: "2rem 0"
     }
 }
@@ -27,7 +28,10 @@ const LoginScreen = () => {
     return (
         <Container fluid>
             <Grid item sm={12} sx={{ ...style.formWrap }}>
-                <LoginForm />
+                <Box component='div'>
+                    <Typography sx={{ textAlign: "center", margin: "2rem 0 3.5rem 0" }} variant='h4'>APTITUDE TEST</Typography>
+                    <LoginForm />
+                </Box>
             </Grid>
         </Container>
     )

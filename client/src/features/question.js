@@ -7,7 +7,8 @@ const initialState = {
     error: null,
     testQuestions: null,
     answer: null,
-    allQuestions: null
+    allQuestions: null,
+    submitStatus: null
 }
 
 export const createQuestion = createAsyncThunk('/question/create', async (question, thunkAPI) => {
@@ -94,9 +95,11 @@ export const questionSlice = createSlice({
             state.status = "loading"
         }).addCase(submitAnswers.fulfilled, (state, action) => {
             state.status = "succeeded"
+            state.submitStatus = "succeeded"
             state.answer = action.payload
         }).addCase(submitAnswers.rejected, (state, action) => {
             state.status = "failed"
+            state.submitStatus = "failed"
             state.error = action.error.message
         }).addCase(getAllQuestions.pending, (state, action) => {
             state.status = "loading"
