@@ -52,9 +52,13 @@ const style = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
+    },
+    submitBtn: {
+        textAlign: "center",
+        backgroundColor: "#000",
+        padding: "0.7rem 2rem"
     }
 };
-
 
 const initialValues = {
     qDept: '',
@@ -78,13 +82,8 @@ const QuestionForm = ({
     changeImageUrl, }) => {
 
 
-    const validate = () => {
-
-    }
-
-
     return questions.map((ques, i) => (
-        <Form onSubmit={handleSubmit} sx={{ ...style.formWrap }}>
+        <Form onSubmit={handleSubmit} sx={{ ...style.formWrap }} >
             <Paper
                 sx={{ ...style.root }}
                 elevation={2}>
@@ -208,7 +207,9 @@ const QuestionForm = ({
                     )}
                 </Box>
             </Paper>
-            <Button sx={{ bgcolor: "#000" }} variant="contained" type="submit">Submit</Button>
+            <Box sx={{ textAlign: "center" }}>
+                <Button sx={{ ...style.submitBtn }} variant="contained" type="submit">Submit</Button>
+            </Box>
         </Form>
     ))
 }

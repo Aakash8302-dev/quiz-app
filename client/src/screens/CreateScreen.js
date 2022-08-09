@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import QuestionForm from '../components/QuestionForm';
 import axios from 'axios'
 import { createQuestion } from '../features/question';
+import Alert from '../components/Alert'
 
 
 const style = {
@@ -37,9 +38,35 @@ const CreateScreen = () => {
 
     const dispatch = useDispatch();
 
+    const createStatus = useSelector((state) => state.question.createStatus)
+
     const [questions, setQuestions] = useState([
         questionIntialState
     ]);
+    const [notify, setNotify] = useState("");
+
+    useEffect(() => {
+
+        if (createStatus === "succeeded") {
+            setNotify({
+                isOpen: true,
+                message: "Question created Successfully",
+                type: "success"
+            })
+
+            setTimeout(() => {
+                window.location.reload(true)
+            }, 2000)
+
+        } else if (createStatus === "failed") {
+            setNotify({
+                isOpen: true,
+                message: "Something went wrong",
+                type: "error"
+            })
+        }
+
+    }, [createStatus])
 
     const changeQuestion = (text, i) => {
         var newQuestion = [...questions];
@@ -139,6 +166,7 @@ const CreateScreen = () => {
 
     return (
         <Box sx={{ ...style.root }} >
+            <Alert notify={notify} setNotify={setNotify} />
             <QuestionForm
                 changeQuestion={changeQuestion}
                 changeDeptValue={changeDeptValue}

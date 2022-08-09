@@ -8,7 +8,6 @@ import Loader from '../components/Loader'
 import Alert from '../components/Alert'
 
 const TestScreen = () => {
-    console.log('TestScreen')
     const navigate = useNavigate()
     const userInfo = useSelector((state) => state.user.value);
     const submitStatus = useSelector((state) => state.question.submitStatus);

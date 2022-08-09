@@ -15,6 +15,7 @@ import {
     TableBody
 } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../components/Loader'
 import { getLeaderBoard } from '../features/user'
 import { allBranches } from '../data'
 
@@ -78,7 +79,7 @@ const LeaderBoardScreen = () => {
     return (
         <>
             {
-                leaderBoardStatus === "loading" ? (<CircularProgress />) : (
+                leaderBoardStatus === "loading" ? (<Loader />) : (
                     <Container>
                         <Box sx={{ ...style.header }}>
                             <Typography variant='h5' sx={{ ...style.title }}>LeaderBoard</Typography>
