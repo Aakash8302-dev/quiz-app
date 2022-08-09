@@ -56,7 +56,7 @@ const CreateScreen = () => {
 
             setTimeout(() => {
                 window.location.reload(true)
-            }, 2000)
+            }, 1500)
 
         } else if (createStatus === "failed") {
             setNotify({

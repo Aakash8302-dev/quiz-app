@@ -36,6 +36,11 @@ const TestScreen = () => {
                 message: "Test Submitted Successfully",
                 type: "success"
             })
+
+            setTimeout(() => {
+                window.location.reload(true)
+            }, 2000)
+
         } else if (submitStatus === "failed") {
             setNotify({
                 isOpen: true,

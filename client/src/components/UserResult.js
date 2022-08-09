@@ -26,11 +26,11 @@ const UserResult = ({ setComponent }) => {
         }
     }
 
-    const totalQuestions = 12;
-    const totalCore = 3;
-    const totalAptitude = 3;
-    const totalVerbal = 3;
-    const totalCoding = 3
+    const totalQuestions = 6;
+    const totalCore = 2;
+    const totalAptitude = 2;
+    const totalVerbal = 2;
+    const totalCoding = 2;
     var incorrect
 
     let aptitudeScore = answer.aptitudeScore;
