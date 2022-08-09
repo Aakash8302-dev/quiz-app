@@ -39,7 +39,7 @@ const TestScreen = () => {
 
             setTimeout(() => {
                 window.location.reload(true)
-            }, 2000)
+            }, 1500)
 
         } else if (submitStatus === "failed") {
             setNotify({
