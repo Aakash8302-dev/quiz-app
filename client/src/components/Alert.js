@@ -3,7 +3,6 @@ import MuiAlert from '@mui/material/Alert';
 import { Snackbar } from '@mui/material';
 
 const Alert = (AlertObj) => {
-    console.log("AlertObj", AlertObj);
     const { notify, setNotify } = AlertObj;
 
     const alertClose = (reason) => {

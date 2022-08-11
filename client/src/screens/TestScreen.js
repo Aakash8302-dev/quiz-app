@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Button, Container, Grid, Snackbar, Typography } from '@mui/material'
 import axios from 'axios'
 import TestForm from '../components/TestForm'
 import Loader from '../components/Loader'
 import Alert from '../components/Alert'
+import Timer from '../components/Timer'
+import { getTimer } from '../features/timer'
 
 const TestScreen = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const userInfo = useSelector((state) => state.user.value);
     const submitStatus = useSelector((state) => state.question.submitStatus);
+    const endTime = useSelector((state) => state.timer.timerEnd)
 
     const [testQuestions, setTestQuestions] = useState(null)
     const [notify, setNotify] = useState({
@@ -26,7 +31,6 @@ const TestScreen = () => {
         getTestQuestions();
 
     }, [userInfo, navigate])
-
 
     useEffect(() => {
 
@@ -67,6 +71,7 @@ const TestScreen = () => {
     return (
         <Container>
             <Alert notify={notify} setNotify={setNotify} />
+
             <Grid item>
                 {
                     testQuestions ? <TestForm questions={testQuestions} /> : <Loader />

@@ -92,12 +92,7 @@ const getTestQuestions = asyncHandler(async (req, res) => {
 
     let regNo = req.user.regNo;
 
-    let num = String(regNo).slice(-1);
-    num = Number(num);
-
-    num = num / 3;
-
-    let setNumber = Math.ceil(num);
+    let setNumber = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
     setNumber = String(setNumber);
 
     let questions = [];

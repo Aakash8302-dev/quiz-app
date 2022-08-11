@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 const userRoutes = require("./routes/userRoutes.js")
 const questionRoutes = require("./routes/questionRoutes.js")
+const timerRoutes = require("./routes/timerRoutes.js")
 
 const { errorHandler, notFound } = require("./middlewares/errorMiddleware.js")
 const connectDB = require('./utils/db.js');
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 
 app.use("/api/user/", userRoutes);
 app.use("/api/question/", questionRoutes);
+app.use("/api/timer/", timerRoutes);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));

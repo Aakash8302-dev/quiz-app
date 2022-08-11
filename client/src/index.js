@@ -6,11 +6,13 @@ import { configureStore } from "@reduxjs/toolkit"
 import { Provider } from 'react-redux';
 import userReducer from "./features/user"
 import questionReducer from "./features/question"
+import timerReducer from "./features/timer"
 
 const store = configureStore({
   reducer: {
     user: userReducer,
-    question: questionReducer
+    question: questionReducer,
+    timer: timerReducer
   }
 })
 

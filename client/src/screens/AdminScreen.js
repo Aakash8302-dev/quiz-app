@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import LeaderBoardScreen from './LeaderBoardScreen'
 import CreateScreen from './CreateScreen'
 import QuestionScreen from './QuestionScreen'
+import AdminProfileScreen from './AdminProfileScreen'
 
 const AdminScreen = () => {
     const currpath = window.location.href;
@@ -27,6 +28,8 @@ const AdminScreen = () => {
 
     const renderSwitch = (param) => {
         switch (param) {
+            case 'a1':
+                return <AdminProfileScreen />
             case 'a2':
                 return <CreateScreen />
             case 'a4':
