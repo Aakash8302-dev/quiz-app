@@ -30,7 +30,7 @@ const LoginForm = () => {
         let temp = {}
         temp.name = values.name ? "" : "This field is required"
         temp.email = (/@/).test(values.email) ? "" : "Enter valid email "
-        temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13) ? "" : "Enter valid number"
+        temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13 && values.regNo.startsWith("2127")) ? "" : "Enter valid number"
         temp.dept = values.dept.length !== 0 ? "" : "This field is required"
 
         setErrors({
@@ -68,7 +68,7 @@ const LoginForm = () => {
                             variant="outlined"
                             label='Email'
                             name="email"
-                            email={true}
+                            email='true'
                             value={values.email}
                             onChange={handleInputChange}
                             {...(errors ? { error: (errors.email ? true : false), helperText: errors.email } : false)}

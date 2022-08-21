@@ -3,11 +3,16 @@ const Timer = require("../models/timerModel.js")
 
 const setTimer = asyncHandler(async (req, res) => {
     try {
-        const { endTime } = req.body
+        const {startTime, endTime } = req.body
 
-        const userID = "62f3aee3af3a53a2255e894c"
+        const userID = "6300a6927bf8f0baec727320"
 
-        timerCreated = await Timer.findByIdAndUpdate(userID, { "endTime": endTime })
+        let timerCreated = await Timer.findByIdAndUpdate(userID, { "startTime": startTime, "endTime": endTime })
+
+        // const timerCreated = await Timer.create({
+        //     startTime,
+        //     endTime
+        // })
 
         if (timerCreated) {
             res.status(201).json(timerCreated);

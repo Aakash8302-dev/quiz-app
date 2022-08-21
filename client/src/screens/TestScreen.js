@@ -7,7 +7,7 @@ import TestForm from '../components/TestForm'
 import Loader from '../components/Loader'
 import Alert from '../components/Alert'
 import Timer from '../components/Timer'
-import { getTimer } from '../features/timer'
+import TestUnavailableScreen from './TestUnavailableScreen'
 
 const TestScreen = () => {
     const navigate = useNavigate()
@@ -15,7 +15,6 @@ const TestScreen = () => {
 
     const userInfo = useSelector((state) => state.user.value);
     const submitStatus = useSelector((state) => state.question.submitStatus);
-    const endTime = useSelector((state) => state.timer.timerEnd)
 
     const [testQuestions, setTestQuestions] = useState(null)
     const [notify, setNotify] = useState({
@@ -41,10 +40,6 @@ const TestScreen = () => {
                 type: "success"
             })
 
-            setTimeout(() => {
-                window.location.reload(true)
-            }, 1500)
-
         } else if (submitStatus === "failed") {
             setNotify({
                 isOpen: true,
@@ -65,18 +60,18 @@ const TestScreen = () => {
         });
 
         setTestQuestions(data);
-
     }
 
     return (
         <Container>
             <Alert notify={notify} setNotify={setNotify} />
-
             <Grid item>
                 {
-                    testQuestions ? <TestForm questions={testQuestions} /> : <Loader />
+                    testQuestions ? 
+                    <>
+                        <TestForm questions={testQuestions} />
+                    </>  : <Loader />
                 }
-
             </Grid>
         </Container>
     )

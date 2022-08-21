@@ -17,7 +17,6 @@ const style = {
 
 
 const PostSubmitScreen = () => {
-    console.log("Post Submit")
     const [component, setComponent] = useState("resultFeedback")
 
 

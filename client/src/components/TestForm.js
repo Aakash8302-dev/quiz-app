@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { submitAnswers } from '../features/question';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import Timer from './Timer'
 
 const style = {
     questionNo: {
@@ -31,6 +32,7 @@ const style = {
     questionText: {
         fontFamily: "'Poppins', sans-serif",
         fontWeight: 600,
+        margin: "0 0 1rem"
     },
     questionOptionsWrap: {
         margin: '1rem 0',
@@ -81,6 +83,10 @@ const style = {
             float: 'right',
             margin: "1.5rem 0 0"
         }
+    },
+    qImg: {
+        width: "100px",
+        height: "100px"
     }
 };
 
@@ -88,10 +94,21 @@ const TestForm = ({ history, questions }) => {
 
     const dispatch = useDispatch();
 
+    const endTime = useSelector((state) => state.timer.endTime)
+
     const [counter, setCounter] = useState(0);
     const [answers, setAnswers] = useState(questions);
     const [open, setOpen] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
+    const [trigTimer, setTrigTimer] = useState(false)
+
+    useEffect(() => {
+
+        if(trigTimer){
+            handleFormSubmit();
+        }
+
+    },[trigTimer])
 
     const handleModalkOpen = () => setOpen(true);
 
@@ -110,6 +127,7 @@ const TestForm = ({ history, questions }) => {
 
     return (
         <Container sx={{ ...style.PageRoot }}>
+            <Timer endTime={Date.parse(endTime) - Date.parse(new Date())} setTrigTimer={setTrigTimer} />
             <Modal
                 open={open}
                 onClose={handleModalClose}
@@ -151,6 +169,7 @@ const TestForm = ({ history, questions }) => {
                                         <img
                                             src={ques.imageUrl}
                                             alt={ques.imageUrl}
+                                            width={"100%"}
                                         />
                                     )}
                                     <FormControl sx={{ ...style.questionOptionsWrap }}>

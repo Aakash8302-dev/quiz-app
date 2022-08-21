@@ -12,7 +12,7 @@ const Alert = (AlertObj) => {
 
         setNotify({
             ...notify,
-            isOpen: false
+            isOpen: false,
         })
     }
 
@@ -22,7 +22,6 @@ const Alert = (AlertObj) => {
             open={notify.isOpen}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             onClose={alertClose}
-            autoHideDuration={1500}
         >
             <MuiAlert severity={notify.type} onClose={alertClose}>
                 {notify.message}

@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
 const timerSchema = mongoose.Schema({
+    startTime:{
+        type: String,
+        required: true
+    },  
     endTime: {
-        type: Number,
+        type: String,
         required: true
     }
 })

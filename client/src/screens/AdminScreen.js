@@ -8,6 +8,7 @@ import QuestionScreen from './QuestionScreen'
 import AdminProfileScreen from './AdminProfileScreen'
 
 const AdminScreen = () => {
+
     const currpath = window.location.href;
 
     var screen = currpath.split('=')[1];
@@ -20,7 +21,7 @@ const AdminScreen = () => {
 
     useEffect(() => {
 
-        if (userInfo === null) {
+        if (userInfo === null || userInfo.role === "student") {
             navigate('/');
         }
 

@@ -107,6 +107,7 @@ const loginAdmin = asyncHandler(async (req, res) => {
             regNo: user.regNo,
             dept: user.dept,
             role: user.role,
+            password: user.password,
             token: generateToken(user._id),
         });
     } else {

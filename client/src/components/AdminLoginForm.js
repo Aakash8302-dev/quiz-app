@@ -39,7 +39,7 @@ const AdminLoginForm = () => {
 
     const validate = () => {
         let temp = {}
-        temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13) ? "" : "Enter valid RegNo"
+        temp.regNo = (/^[0-9]+$/.test(values.regNo)) ? "" : "Enter valid RegNo"
         temp.password = values.password ? "" : "Enter valid password"
 
         setErrors({

@@ -2,17 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 
 const initialState = {
-    timerEnd: null,
+    startTime: null,
+    endTime: null,
     status: "idle",
     error: null,
 }
 
 
-export const setTimer = createAsyncThunk("/timer/set", async (endTime, thunkAPI) => {
-
-    const values = {
-        "endTime": endTime
-    }
+export const setTimer = createAsyncThunk("/timer/set", async (values, thunkAPI) => {
 
     const { data } = await axios.post('/api/timer/', values)
 
@@ -44,8 +41,8 @@ export const questionSlice = createSlice({
             state.status = "loading"
         }).addCase(setTimer.fulfilled, (state, action) => {
             state.status = "succeeded"
-            console.log(action)
-            state.timerEnd = action.payload.endTime
+            state.startTime = action.payload.startTime
+            state.endTime = action.payload.endTime
         }).addCase(setTimer.rejected, (state, action) => {
             state.status = "failed"
             state.error = action.error
@@ -53,7 +50,8 @@ export const questionSlice = createSlice({
             state.status = "loading"
         }).addCase(getTimer.fulfilled, (state, action) => {
             state.status = "succeeded"
-            state.timerEnd = action.payload[0].endTime
+            state.endTime = action.payload[0].endTime
+            state.startTime = action.payload[0].startTime
         }).addCase(getTimer.rejected, (state, action) => {
             state.state = "failed"
             state.error = action.error

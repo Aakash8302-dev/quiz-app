@@ -102,6 +102,22 @@ const getTestQuestions = asyncHandler(async (req, res) => {
     var verbalQuestion = await Question.find({ $and: [{ questionCategory: "Verbal" }, { questionSet: setNumber }] });
     var codingQuestion = await Question.find({ $and: [{ questionCategory: "Coding" }, { questionSet: setNumber }] });
 
+    function shuffleArray(array) {
+        let len = array.length,
+            currentIndex;
+        for (currentIndex = len - 1; currentIndex > 0; currentIndex--) {
+            let randIndex = Math.floor(Math.random() * (currentIndex + 1) );
+            var temp = array[currentIndex];
+            array[currentIndex] = array[randIndex];
+            array[randIndex] = temp;
+        }
+        
+    }
+
+    shuffleArray(aptitudeQuestion);
+    shuffleArray(codingQuestion);
+    shuffleArray(coreQuestion);
+
     questions = aptitudeQuestion;
     questions = questions.concat(verbalQuestion);
     questions = questions.concat(codingQuestion);

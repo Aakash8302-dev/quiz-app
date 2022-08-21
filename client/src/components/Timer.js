@@ -22,20 +22,20 @@ const styles = {
     },
 };
 
-const Timer = ({ endTime }) => {
+const Timer = ({ endTime, setTrigTimer }) => {
 
 
 
     const renderer = ({ hours, minutes, seconds, completed }) => {
         if (completed) {
-            window.alert("Timer Done")
+            setTrigTimer(true)
         } else {
             return <span>{minutes} : {seconds}</span>
         }
     }
 
     return (
-        <Container>
+        <>
             <Box sx={{ ...styles.timerHeader }}>
                 <Box sx={{ ...styles.timerText }}>
                     <Typography variant='h6'>Time Remaining</Typography>
@@ -51,7 +51,7 @@ const Timer = ({ endTime }) => {
 
             </Typography>
 
-        </Container>
+        </>
     )
 }
 
