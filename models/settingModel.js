@@ -4,6 +4,10 @@ const settingSchema = mongoose.Schema({
     showAnswer:{
         type: Boolean,
         required: true
+    },
+    instituteName:{
+        type: String,
+        required: true
     }
 })
 

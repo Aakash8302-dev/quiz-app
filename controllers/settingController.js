@@ -3,11 +3,11 @@ const Setting = require('../models/settingModel.js')
 
 const createSetting = asyncHandler(async (req, res) => {
     try {
-        const {showAnswer} = req.body
+        const {showAnswer, instituteName} = req.body
 
         userID = "6301e3a30137dc85d35b22de"
 
-        await Setting.findByIdAndUpdate(userID, { "showAnswer": showAnswer})
+        await Setting.findByIdAndUpdate(userID, { "showAnswer": showAnswer, "instituteName" : instituteName})
 
         const settingCreated = await Setting.find({})
 
