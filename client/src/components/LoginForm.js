@@ -15,7 +15,8 @@ const Item = styled(Box)(({ theme }) => ({
 
 
 const initialValues = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     regNo: '',
     dept: ''
@@ -28,8 +29,9 @@ const LoginForm = () => {
 
     const validate = () => {
         let temp = {}
-        temp.name = values.name ? "" : "This field is required"
-        temp.email = (/@/).test(values.email) ? "" : "Enter valid email "
+        temp.firstName = values.firstName ? "" : "This field is required"
+        temp.lastName = values.lastName ? "" : "This field is required"
+        temp.email = (/@/).test(values.email) && (values.email.endsWith("@svce.ac.in")) ? "" : "Enter svce email id "
         temp.regNo = (/^[0-9]+$/.test(values.regNo) && values.regNo.length === 13 && values.regNo.startsWith("2127")) ? "" : "Enter valid number"
         temp.dept = values.dept.length !== 0 ? "" : "This field is required"
 
@@ -48,6 +50,7 @@ const LoginForm = () => {
         if (validate()) {
             values.role = "student"
             dispatch(userRegister(values))
+           
         }
     }
 
@@ -58,11 +61,19 @@ const LoginForm = () => {
                     <Item>
                         <TextField
                             variant="outlined"
-                            label='Name'
-                            name="name"
-                            value={values.name}
+                            label='First Name'
+                            name="firstName"
+                            value={values.firstName}
                             onChange={handleInputChange}
-                            {...(errors ? { error: (errors.name ? true : false), helperText: errors.name } : false)}
+                            {...(errors ? { error: (errors.firstName ? true : false), helperText: errors.firstName } : false)}
+                        />
+                        <TextField
+                            variant="outlined"
+                            label='Last Name'
+                            name="lastName"
+                            value={values.lastName}
+                            onChange={handleInputChange}
+                            {...(errors ? { error: (errors.name ? true : false), helperText: errors.lastName } : false)}
                         />
                         <TextField
                             variant="outlined"

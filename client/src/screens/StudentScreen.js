@@ -17,6 +17,7 @@ const StudentScreen = () => {
     const dispatch = useDispatch();
 
     const [timerStarted, setTimerStarted] = useState("idle")
+    const [notify, setNotify] = useState("");
 
     const userAnswer = useSelector((state) => state.user.userAnswer)
     const userInfo = useSelector((state) => state.user.value)
@@ -28,7 +29,8 @@ const StudentScreen = () => {
         if (userInfo === null) {
             navigate('/');
         } else {
-            if (userInfo.role === "admin")
+
+            if(userInfo.role === "admin")
                 navigate('/alogin')
         }
 
@@ -62,7 +64,7 @@ const StudentScreen = () => {
                 endTime && timerStarted === "running" ? (
                     userAnswer && userAnswer.exists === "submitted" ? (<PostSubmitScreen />) : endTime && endTime ?  (<TestScreen />) : <Loader />
                 
-                ) : (timerStarted === "waiting") ? <TestUnavailableScreen message={"Test is yet to start"} /> : (timerStarted === "completed") ? ( userAnswer && userAnswer.exists === "submitted" ? <PostSubmitScreen /> : <TestUnavailableScreen message={"Test Over"} />) : <Loader />
+                ) : (timerStarted === "waiting") ? <TestUnavailableScreen title={"Test has not yet started..."} /> : (timerStarted === "completed") ? ( userAnswer && userAnswer.exists === "submitted" ? <PostSubmitScreen /> : <TestUnavailableScreen title={"Whoops..."} subTitle={"seems like test has completed"} />) : <Loader />
             }
 
             

@@ -7,41 +7,58 @@ const bcrypt = require('bcryptjs')
 
 
 const registerUser = asyncHandler(async (req, res) => {
+
     try {
-        const { name, email, regNo, dept, role } = req.body;
+        const { firstName,lastName, email, regNo, dept, role } = req.body;
 
         const exists = await User.findOne({ $and: [{ regNo }, { role }] });
 
         if (exists) {
-            res.json({
-                _id: exists._id,
-                name: exists.name,
-                regNo: exists.regNo,
-                email: exists.email,
-                dept: exists.dept,
-                role: exists.role,
-                isVolunteer: exists.isVolunteer,
-                token: generateToken(exists._id),
-            });
+
+            if(exists.login){
+                throw new Error('User Already Logged In')
+            }else{
+
+                const newValue = {$set : {login: true}}
+                await User.updateOne({ _id : exists._id}, newValue)
+
+                const loggedInUser = await User.findById(exists._id)
+
+                res.json({
+                    _id: loggedInUser._id,
+                    firstName: loggedInUser.firstName,
+                    lastName: loggedInUser.lastName,
+                    regNo: loggedInUser.regNo,
+                    email: loggedInUser.email,
+                    dept: loggedInUser.dept,
+                    role: loggedInUser.role,
+                    login: loggedInUser.login,
+                    token: generateToken(loggedInUser._id),
+                });
+            }
 
         } else {
 
             const user = await User.create({
-                name,
+                firstName,
+                lastName,
                 email,
                 regNo,
                 dept,
-                role
+                role,
+                login: true
             });
 
             if (user) {
                 res.status(201).json({
                     _id: user._id,
-                    name: user.name,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     email: user.email,
                     regNo: user.regNo,
                     dept: user.dept,
                     role: user.role,
+                    login: user.login,
                     token: generateToken(user._id)
                 })
             } else {
@@ -56,8 +73,39 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 });
 
+const logoutUser = asyncHandler(async (req, res) => {
+    try {
+
+        const newValue = {$set : {login: false}}
+        await User.updateOne({ _id : req.user._id}, newValue)
+
+        const loggedOutUser = await User.findById(req.user._id);
+
+        if (loggedOutUser) {
+
+            res.status(201).json({
+                _id: loggedOutUser._id,
+                firstName: loggedOutUser.firstName,
+                lastName: loggedOutUser.lastName,
+                email: loggedOutUser.email,
+                regNo: loggedOutUser.regNo,
+                dept: loggedOutUser.dept,
+                role: loggedOutUser.role,
+                login: loggedOutUser.login,
+            })
+
+        }else{
+            throw new Error("Logout Failed")
+        }
+
+    } catch (error) {
+        res.status(400);
+        throw new Error(error);
+    }
+})
+
 const registerAdmin = asyncHandler(async (req, res) => {
-    const { name, email, regNo, dept, role, password } = req.body;
+    const { firstName,lastName, email, regNo, dept, role, password } = req.body;
 
     const userExists = await User.findOne({ $and: [{ regNo }, { role }] });
 
@@ -67,23 +115,27 @@ const registerAdmin = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-        name,
+        firstName,
+        lastName,
         email,
         regNo,
         dept,
         role,
         password,
+        login: true
     });
 
     if (user) {
         res.status(201).json({
             _id: user._id,
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             regNo: user.regNo,
             dept: user.dept,
             password: user.password,
             role: user.role,
+            login: user.login,
             token: generateToken(user._id),
         });
     } else {
@@ -102,12 +154,14 @@ const loginAdmin = asyncHandler(async (req, res) => {
     if (user && (await user.matchPassword(password))) {
         res.json({
             _id: user._id,
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             regNo: user.regNo,
             dept: user.dept,
             role: user.role,
             password: user.password,
+            login: user.login,
             token: generateToken(user._id),
         });
     } else {
@@ -141,7 +195,8 @@ const submitAnswer = asyncHandler(async (req, res) => {
     });
 
     const newUserAnswer = await UserAnswer.create({
-        name: req.user.name,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
         regNo: req.user.regNo,
         dept: req.user.dept,
         userId: req.user._id,
@@ -162,7 +217,6 @@ const submitAnswer = asyncHandler(async (req, res) => {
 
 
 });
-
 
 const getResult = asyncHandler(async (req, res) => {
 
@@ -274,4 +328,4 @@ const checkSubmission = asyncHandler(async (req, res) => {
 
 })
 
-module.exports = { registerUser, registerAdmin, loginAdmin, submitAnswer, getResult, createFeedback, getFeedback, getLeaderBoard, checkSubmission }
+module.exports = { registerUser,logoutUser, registerAdmin, loginAdmin, submitAnswer, getResult, createFeedback, getFeedback, getLeaderBoard, checkSubmission }

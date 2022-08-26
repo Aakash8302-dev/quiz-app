@@ -1,11 +1,17 @@
 const express = require("express");
-const { registerUser, submitAnswer, getResult, createFeedback, getFeedback, getLeaderBoard, checkSubmission, registerAdmin, loginAdmin } = require("../controllers/userController.js");
+const { registerUser,logoutUser, submitAnswer, getResult, createFeedback, getFeedback, getLeaderBoard, checkSubmission, registerAdmin, loginAdmin } = require("../controllers/userController.js");
 const { protect, authAdmin } = require('../middlewares/authMiddleware')
 
 const router = express.Router();
 
 router.route('/register')
     .post(registerUser);
+
+router.route('/logout')
+    .post(protect,logoutUser)
+
+router.route('/logout')
+    .post(logoutUser)
 
 router.route('/answer')
     .get(protect, getResult)

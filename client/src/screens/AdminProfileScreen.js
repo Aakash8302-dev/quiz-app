@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Typography, Container, Stack, TextField, Button, Grid } from '@mui/material'
+import { Typography, Container, Stack, TextField, Button, Grid, Box } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm, Form } from '../components/useForm'
 import { setTimer, getTimer } from '../features/timer'
@@ -21,7 +21,8 @@ const style = {
         flexDirection: 'column'
     },
     btn:{
-        textAlign: "center"
+        textAlign: "center",
+        margin: "2rem"
     }
 }
 
@@ -37,22 +38,17 @@ const AdminProfileScreen = () => {
 
     const initialStartTime = useSelector((state) => state.timer.startTime)
     const initialEndTime = useSelector((state) => state.timer.endTime)
+    const timerGetStatus = useSelector((state) => state.timer.status)
 
     const [startTime, setStartTime] = useState(initialStartTime)
     const [endTime, setEndTime] = useState(initialEndTime)
-
-    useEffect(() => {
-        dispatch(getTimer())
-    }, [])
 
     const handleSubmit = () => {
         
         const values = {
             startTime,
             endTime
-        }  
-
-        console.log(values)
+        }
 
         dispatch(setTimer(values))
     }
@@ -61,18 +57,19 @@ const AdminProfileScreen = () => {
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Container>
-                <Grid container sx={style.root} >
                     {
-                        initialStartTime && initialEndTime ? <><Grid item md={6} sm={6} sx={{...style.dateGrid}}>
+                        timerGetStatus && timerGetStatus === "succeeded" ? <> <Grid container sx={{...style.root}}><Grid item md={6} sm={6} sx={{...style.dateGrid}}>
                             <MuiDateTime dateTime={startTime}  setDateTime={setStartTime} label={'Start Time'}/>
                         </Grid>
                         <Grid item md={6} sm={6} sx={{...style.dateGrid}}>
                             <MuiDateTime dateTime={endTime}  setDateTime={setEndTime} label={'End Time'}/>
                         </Grid>
-                        <Button type='button' variant='contained' sx={{...style.btn}} onClick={handleSubmit}>Set Timer</Button></>: (<Loader />)
-                    }
-                        
-                </Grid>
+                        </Grid>
+                        <Box sx={{...style.btn}}>
+                            <Button type='button' variant='contained' sx={{...style.btn}} onClick={handleSubmit}>Set Timer</Button>
+                        </Box>
+                        </>: (<Loader />)
+                    } 
             </Container>
         </LocalizationProvider>
     )

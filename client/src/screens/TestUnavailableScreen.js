@@ -19,13 +19,17 @@ const style = {
   message:{
     margin: "2rem 0",
     fontWeight: "bold"
+  },
+  subTitle:{
+    fontStyle : "italic"
   }
 }
 
-const TestUnavailableScreen = ({message}) => {
+const TestUnavailableScreen = ({title, subTitle}) => {
   return (
     <Container sx={{...style.root}}>
-      <Typography variant='h4'  sx={{...style.message}} >{message}</Typography>
+      <Typography variant='h4'  sx={{...style.message}} >{title}</Typography>
+      <Typography variant="h6" sx={{...style.subTitle}} >{subTitle}</Typography>
       <Box component='div' sx={{...style.imageCenter}}>
         <img src={hourglass} alt="hourglass" style={{...style.hourglass}}/>
       </Box>

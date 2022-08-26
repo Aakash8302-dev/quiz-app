@@ -159,7 +159,8 @@ const submitAnswers = asyncHandler(async (req, res) => {
         });
 
         const newUserAnswer = await UserAnswer.create({
-            name: req.user.name,
+            firstName: req.user.firstName,
+            lastName: req.user.lastName,
             dept: req.user.dept,
             regNo: req.user.regNo,
             userId: req.user._id,

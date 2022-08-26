@@ -16,8 +16,9 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Menu as MenuIcon, AccountCircle } from '@mui/icons-material';
-import { logout } from '../features/user';
+import { userLogout } from '../features/user';
 import logo from '../images/forese-white.png';
+import axios from 'axios'
 
 const classes = {
     root: {
@@ -78,8 +79,9 @@ const Header = () => {
         setAnchorE1(e.currentTarget);
     };
 
-    const handleProfileLogout = () => {
-        dispatch(logout())
+    const handleProfileLogout = async () => {
+
+        dispatch(userLogout())
         setAnchorE1(null);
     };
 
@@ -111,6 +113,9 @@ const Header = () => {
                 <ListItem button onClick={() => navigate('/admin?screen=a4')}>
                     <ListItemText>LeaderBoard</ListItemText>
                 </ListItem>
+                <ListItem button onClick={() => navigate('/admin?screen=a5')}>
+                    <ListItemText>Settings</ListItemText>
+                </ListItem>
             </List>
         </div>
     );
@@ -121,7 +126,10 @@ const Header = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
             style={{ top: '2.1rem' }}
-        >
+        >      
+            <MenuItem onClick={handleMenuClose}>
+                {userInfo && userInfo.firstName.toUpperCase()}
+            </MenuItem>
             <MenuItem onClick={handleMenuClose}>
                 {userInfo && userInfo.regNo}
             </MenuItem>
@@ -169,7 +177,7 @@ const Header = () => {
                     {userInfo && userInfo.token ? (
                         <Box sx={{ ...classes.userTitle }}>
                             <Button color='inherit'>
-                                {(userInfo && userInfo.name)}
+                                {(userInfo && userInfo.regNo)}
                             </Button>
                             <IconButton color='inherit' onClick={handleProfileMenuOpen}>
                                 <AccountCircle />

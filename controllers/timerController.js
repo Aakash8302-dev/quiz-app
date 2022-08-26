@@ -24,6 +24,9 @@ const setTimer = asyncHandler(async (req, res) => {
         })
     }
 })
+
+
+
 const getTimer = asyncHandler(async (req, res) => {
     try {
 

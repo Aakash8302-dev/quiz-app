@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container as Box, Grid } from '@mui/material'
+import { getSetting } from '../features/setting';
+import { useDispatch } from 'react-redux';
 import FeedbackForm from '../components/FeedbackForm'
 import UserResult from '../components/UserResult';
 import UserAnswer from '../components/UserAnswer';
@@ -17,6 +19,13 @@ const style = {
 
 
 const PostSubmitScreen = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getSetting());
+    })
+
     const [component, setComponent] = useState("resultFeedback")
 
 

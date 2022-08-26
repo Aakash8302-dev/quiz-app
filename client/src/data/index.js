@@ -147,4 +147,18 @@ const qSetValue = [
     }
 ]
 
-export { allBranches, branches, commonCategory, specificCategory, qSetValue }
+
+const headers = [
+    {label: "First Name", key: "firstName"},
+    {label: "Last Name", key: "lastName"},
+    {label: "Department", key: "dept"},
+    {label: "Register Number", key: "regNo"},
+    {label: "Aptitude", key: "aptitudeScore"},
+    {label: "Verbal", key: "verbalScore"},
+    {label: "Coding", key: "codingScore"},
+    {label: "Core", key: "coreScore"},
+    {label: "Total", key: "totalScore"},
+]
+
+
+export { allBranches, branches, commonCategory, specificCategory, qSetValue, headers }

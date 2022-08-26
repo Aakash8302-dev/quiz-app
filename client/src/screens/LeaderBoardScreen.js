@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CircularProgress } from '@mui/material'
+import { Button, CircularProgress, IconButton } from '@mui/material'
 import {
     Container,
     Box,
@@ -17,7 +17,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import { getLeaderBoard } from '../features/user'
-import { allBranches } from '../data'
+import { allBranches, headers } from '../data'
+import CloudDownloadOutlinedIcon from '@mui/icons-material/CloudDownloadOutlined';
+import {CSVLink} from 'react-csv'
+
 
 const style = {
     root: {
@@ -46,6 +49,13 @@ const style = {
     select: {
         marginTop: "10px",
         width: '15rem'
+    },
+    headerWrap:{
+        display: "flex",
+        alignItems: "center"
+    },
+    dwBtn:{
+        margin: "0 1rem"
     }
 }
 
@@ -76,6 +86,13 @@ const LeaderBoardScreen = () => {
     }, [department, leaderboardInfo])
 
 
+        const csvReport = {
+            filename: 'AptitudeScore.csv',
+            headers: headers,
+            data: filteredLeaderboard
+        }
+
+
     return (
         <>
             {
@@ -83,21 +100,28 @@ const LeaderBoardScreen = () => {
                     <Container>
                         <Box sx={{ ...style.header }}>
                             <Typography variant='h5' sx={{ ...style.title }}>LeaderBoard</Typography>
-                            <TextField
-                                select
-                                variant="outlined"
-                                size="small"
-                                label="Department"
-                                value={department}
-                                onChange={(e) => setDepartment(e.target.value)}
-                                sx={{ ...style.select }}
-                            >
-                                {allBranches.map((e) => (
-                                    <MenuItem key={e.id} value={e.value} sx={{ minWidth: 10 }} >
-                                        {e.value}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            <Box sx={{...style.headerWrap}}>
+                                <TextField
+                                    select
+                                    variant="outlined"
+                                    size="small"
+                                    label="Department"
+                                    value={department}
+                                    onChange={(e) => setDepartment(e.target.value)}
+                                    sx={{ ...style.select }}
+                                >
+                                    {allBranches.map((e) => (
+                                        <MenuItem key={e.id} value={e.value} sx={{ minWidth: 10 }} >
+                                            {e.value}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                                <IconButton sx={{...style.dwBtn}}>
+                                    <CSVLink {...csvReport}>
+                                        <CloudDownloadOutlinedIcon fontSize="small" />
+                                    </CSVLink>
+                                </IconButton>
+                            </Box>
                         </Box>
                         <Grid item>
                             <Paper sx={{ ...style.root }} >
@@ -120,7 +144,7 @@ const LeaderBoardScreen = () => {
                                             filteredLeaderboard.map((ele, index) => (
                                                 <TableRow key={index}>
                                                     <TableCell>{index + 1}</TableCell>
-                                                    <TableCell>{ele.name}</TableCell>
+                                                    <TableCell>{`${ele.firstName.toUpperCase()} ${ele.lastName.toUpperCase()}`}</TableCell>
                                                     <TableCell>{ele.regNo}</TableCell>
                                                     <TableCell>{ele.dept}</TableCell>
                                                     <TableCell>{ele.totalScore}</TableCell>

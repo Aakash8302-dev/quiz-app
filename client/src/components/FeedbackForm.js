@@ -6,6 +6,7 @@ import { useForm, Form } from './useForm'
 import { branches } from '../data'
 import RatingStar from './RatingStar'
 import { userFeedback } from '../features/user'
+import Alert from '../components/Alert'
 
 
 const Item = styled(Box)(({ theme }) => ({
@@ -26,9 +27,33 @@ const FeedbackForm = () => {
     const dispatch = useDispatch()
 
     const [hover, setHover] = useState(null);
-
-    const [rating, setRating] = useState(3);
+    const [rating, setRating] = useState(1);
     const [difficulty, setDifficulty] = useState(1);
+    const [notify, setNotify] = useState({
+        isOpen: false,
+        message: "",
+        type: null
+    })
+
+    const feedbackStatus = useSelector((state) => state.user.feedbackStatus)
+
+    useEffect(() => {
+
+        if(feedbackStatus === "succeeded"){
+            setNotify({
+                isOpen: true,
+                message: "Feedback submitted successfully",
+                type: "success"
+            })
+        }else if(feedbackStatus === "failed"){
+            setNotify({
+                isOpen: true,
+                message: "Unable to submit feedback",
+                type: "error"
+            })
+        }
+       
+    },[feedbackStatus])
 
     const validate = () => {
         let temp = {}
@@ -56,6 +81,7 @@ const FeedbackForm = () => {
 
     return (
         <Form onSubmit={handleSubmit}>
+            <Alert notify={notify} setNotify={setNotify} />
             <Grid container>
                 <Grid item>
                     <Item>

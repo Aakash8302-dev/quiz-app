@@ -9,29 +9,36 @@ const initialState = {
     error: null,
     userAnswer: null,
     leaderboard: null,
-    feedbackStatus: null
+    feedbackStatus: null,
+    userRegisterStatus: null
 }
 
 export const userRegister = createAsyncThunk('user/register', async (userData, thunkAPI) => {
-    try {
+
         const config = {
             headers: {
                 'Content-Type': 'application/json',
             },
         };
-        const { name, email, regNo, dept, role, password } = userData
+        const { firstName,lastName, email, regNo, dept, role, password } = userData
 
         if ((password) && (role === "admin")) {
             const { data } = await axios.post('/api/user/alogin', { regNo, password }, config)
-            return data
+            if (data.error) {
+                throw new Error(data.error)
+            } else {
+                return data
+            }
         } else {
-            const { data } = await axios.post('/api/user/register', { name, email, regNo, dept, role }, config)
-            return data
+            const { data } = await axios.post('/api/user/register', { firstName, lastName, email, regNo, dept, role }, config)
+
+            if (data.error) {
+                throw new Error(data.error)
+            } else {
+                return data
+            }
         }
 
-    } catch (error) {
-        return error.message
-    }
 })
 
 export const userFeedback = createAsyncThunk('/user/feedback', async ({ review, rating, difficulty }, thunkAPI) => {
@@ -40,6 +47,26 @@ export const userFeedback = createAsyncThunk('/user/feedback', async ({ review, 
 
 
     const { data } = await axios.post('/api/user/feedback', { review, rating, difficulty }, {
+        headers: {
+            Authorization: `Bearer ${userInfo}`,
+        },
+    })
+
+    if (data.error) {
+        throw new Error(data.error)
+    } else {
+        return data
+    }
+
+})
+
+export const userLogout = createAsyncThunk('/user/logout', async (answers, thunkAPI) => {
+    var { user: { value } } = thunkAPI.getState()
+    var userInfo = value.token
+
+    console.log(userInfo)
+
+    const { data } = await axios.post('/api/user/logout',{}, {
         headers: {
             Authorization: `Bearer ${userInfo}`,
         },
@@ -92,23 +119,20 @@ export const getLeaderBoard = createAsyncThunk('/user/leaderBoard', async (answe
 export const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {
-        logout: (state, action) => {
-            localStorage.removeItem("userInfo");
-            state.value = null
-            state.status = "idle"
-        }
-    },
+    reducers: { },
     extraReducers(builder) {
         builder.addCase(userRegister.pending, (state, action) => {
             state.status = "loading"
         }).addCase(userRegister.fulfilled, (state, action) => {
             state.status = "succeeded"
             state.value = action.payload
+            state.error = null
+            state.userRegisterStatus = null
             localStorage.setItem("userInfo", JSON.stringify(action.payload));
         }).addCase(userRegister.rejected, (state, action) => {
             state.status = "failed"
             state.error = action.error.message
+            state.userRegisterStatus = "User Already Logged In"
         }).addCase(checkSubmission.pending, (state, action) => {
             state.status = "loading"
         }).addCase(checkSubmission.fulfilled, (state, action) => {
@@ -131,6 +155,16 @@ export const userSlice = createSlice({
             state.feedbackStatus = "succeeded"
         }).addCase(userFeedback.rejected, (state, action) => {
             state.feedbackStatus = "failed"
+            state.error = action.error.message
+        }).addCase(userLogout.pending, (state, action) => {
+            state.status = "loading"
+        }).addCase(userLogout.fulfilled, (state, action) => {
+            localStorage.removeItem("userInfo");
+            state.value = null
+            state.status = "idle"
+            state.userRegisterStatus = null
+        }).addCase(userLogout.rejected, (state, action) => {
+            state.status = "failed"
             state.error = action.error.message
         })
     }

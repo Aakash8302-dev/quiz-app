@@ -12,6 +12,7 @@ import PieChart, {
 const UserResult = ({ setComponent }) => {
 
     const answer = useSelector((state) => state.user.userAnswer.answer[0])
+    const checkAnswerStatus = useSelector((state) => state.setting.showAnswer)
 
     const style = {
         root: {
@@ -54,7 +55,7 @@ const UserResult = ({ setComponent }) => {
     return (
         <Container sx={{ ...style.root }}>
             <Stack spacing={1} >
-                <Typography variant="h5">NAME : {answer.name.toUpperCase()}</Typography>
+                <Typography variant="h5">NAME : { `${answer.firstName.toUpperCase()} ${answer.lastName.toUpperCase()}`}</Typography>
                 <Typography variant="h5">REG NO : {answer.regNo}</Typography>
                 <PieChart
                     id="pie"
@@ -80,7 +81,7 @@ const UserResult = ({ setComponent }) => {
                 </PieChart>
                 <Typography variant="h5">Total Score : {answer.totalScore}</Typography>
             </Stack>
-            <Button type="button" sx={{ ...style.btn }} variant="contained" onClick={() => setComponent("userAnswer")}>Check Answers</Button>
+            <Button disabled={!checkAnswerStatus} type="button" sx={{ ...style.btn }} variant="contained" onClick={() => setComponent("userAnswer")}>Check Answers</Button>
         </Container>
     )
 }

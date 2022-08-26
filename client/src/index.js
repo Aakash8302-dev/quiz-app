@@ -7,12 +7,14 @@ import { Provider } from 'react-redux';
 import userReducer from "./features/user"
 import questionReducer from "./features/question"
 import timerReducer from "./features/timer"
+import settingReducer from "./features/setting"
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     question: questionReducer,
-    timer: timerReducer
+    timer: timerReducer,
+    setting: settingReducer
   }
 })
 
