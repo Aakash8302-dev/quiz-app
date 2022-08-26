@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import { Container, Typography, Switch, FormControl, FormControlLabel, Button, Box, Stack } from '@mui/material'
+import { Container, Typography, Switch, FormControl, FormControlLabel, Button, Box, Stack, TextField } from '@mui/material'
 import {useSelector, useDispatch} from 'react-redux'
 import { createSetting, getSetting } from '../features/setting'
 import Loader from '../components/Loader'
@@ -30,7 +30,9 @@ const SettingScreen = () => {
     const dispatch = useDispatch();
     
     const initialSetting = useSelector((state) => state.setting)
+    const inititalInstName = useSelector((state) => state.setting.instituteName)
     const [setting, setSetting] = useState(initialSetting)
+    const [instituteName, setInstituteName] = useState(inititalInstName)
 
     const handleChange = (e) => {
 
@@ -44,7 +46,13 @@ const SettingScreen = () => {
 
 
     const handleSubmit = () => {
-        dispatch(createSetting(setting))
+        let values = {}
+
+        values.showAnswer = setting.showAnswer
+        values.instituteName = instituteName
+
+        dispatch(createSetting(values))
+
     }
 
   return (
@@ -54,6 +62,7 @@ const SettingScreen = () => {
                 <Typography variant='h5' sx={{...style.title}}>Settings</Typography>
                     <Box component='div' sx={{...style.settingWrap}}>
                         <FormControl component='fieldset'>
+                                <TextField variant="outlined" label="Institute Name" name="institueName" value={instituteName}  onChange={(e) => setInstituteName(e.target.value)} size="small" />
                                 <FormControlLabel
                                     control={<Switch name="showAnswer" checked={setting.showAnswer} onChange={handleChange}  />}
                                     label="Show Answers"

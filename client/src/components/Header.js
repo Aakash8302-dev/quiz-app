@@ -170,7 +170,7 @@ const Header = () => {
                             variant='h6'
                             color='inherit'
                         >
-                            <Box component="img" sx={{ width: "80px", padding: "5px 0", }} src={logo} alt='logo' />
+                            <Box component="img" sx={{ width: "80px", padding: "5px 0", }} src={""} alt='logo' />
 
                         </Typography>
                     )}

@@ -42,7 +42,7 @@ const LoginScreen = () => {
             <Alert notify={notify} setNotify={setNotify} />
             <Grid item sm={12} sx={{ ...style.formWrap }}>
                 <Box component='div'>
-                    <Typography sx={{ textAlign: "center", margin: "2rem 0 3.5rem 0" }} variant='h4'>APTITUDE TEST</Typography>
+                    <Typography sx={{ textAlign: "center", margin: "2rem 0 3.5rem 0" }} variant='h4'>TEST</Typography>
                     <LoginForm />
                 </Box>
             </Grid>
