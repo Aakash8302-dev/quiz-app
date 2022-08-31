@@ -26,6 +26,7 @@ const questionIntialState = {
         {
             optionText: '',
             uid: uuidv4(),
+            optionImage: ''
         },
     ],
     userAnswer: null,
@@ -98,6 +99,12 @@ const CreateScreen = () => {
         setQuestions(optionsQuestion);
     };
 
+    const changeOptionImageValue = (text, i, j) => {
+        var optionsQuestion = [...questions];
+        optionsQuestion[i].options[j].optionImage = text;
+        setQuestions(optionsQuestion);
+    }
+
     const changeImageUrl = (url, i) => {
         var image = [...questions];
         image[i].imageUrl = url;
@@ -118,6 +125,7 @@ const CreateScreen = () => {
             optionsOfQuestion[i].options.push({
                 optionText: 'Option' + (optionsOfQuestion[i].options.length + 1),
                 uid: uuidv4(),
+                optionImage: ''
             });
         } else {
             console.log('Max 5 Options');
@@ -173,6 +181,7 @@ const CreateScreen = () => {
                 changeQuestionCategoryValue={changeQuestionCategoryValue}
                 changeQuestionSetValue={changeQuestionSetValue}
                 changeOptionValue={changeOptionValue}
+                changeOptionImageValue={changeOptionImageValue}
                 removeOption={removeOption}
                 addOption={addOption}
                 handleSubmit={handleSubmit}

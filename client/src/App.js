@@ -8,6 +8,7 @@ import CreateScreen from './screens/CreateScreen';
 import AdminScreen from './screens/AdminScreen';
 import StudentScreen from './screens/StudentScreen';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import RulesScreen from './screens/RulesScreen';
 
 const theme = createTheme({
   typography: {

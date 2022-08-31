@@ -21,6 +21,9 @@ const questionSchema = mongoose.Schema({
                 type: String,
                 required: true,
             },
+            optionImage:{
+                type: String,
+            },
             uid: {
                 type: String,
             },

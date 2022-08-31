@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Grid, TextField, Box, styled, MenuItem, Button } from '@mui/material'
+import React, { useEffect,useState } from 'react'
+import { Grid, TextField, Box, styled, MenuItem, Button, Modal, Typography, Stack } from '@mui/material'
 import { useDispatch, useSelector } from "react-redux"
 import { userRegister } from '../features/user'
 import { useForm, Form } from './useForm'
@@ -22,10 +22,34 @@ const initialValues = {
     dept: ''
 }
 
+const style = {
+    modal: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: '#FFFF',
+        border: '2px solid #FFFFF',
+        borderRadius: '0.6rem',
+        boxShadow: 24,
+        p: 4,
+        title: {
+            color: '#000'
+        },
+        footer: {
+            float: 'right',
+            margin: "1.5rem 0 0"
+        }
+    },
+}
+
 
 const LoginForm = () => {
 
     const dispatch = useDispatch()
+
+    const [open, setOpen] = useState(false)
 
     const validate = () => {
         let temp = {}
@@ -42,12 +66,22 @@ const LoginForm = () => {
         return Object.values(temp).every(x => x === "")
     }
 
+
+    const handleModalOpen = () => {
+        if(validate()){
+            setOpen(true)
+        }
+    }
+
+    const handleModalClose = () => setOpen(false);
+
+
     const { values, setValues, errors, setErrors, handleInputChange } = useForm(initialValues)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validate()) {
+        if (validate()){
             values.role = "student"
             dispatch(userRegister(values))
            
@@ -55,7 +89,22 @@ const LoginForm = () => {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form>
+            <Modal
+                open={open}
+                onClose={handleModalClose}
+            >
+                <Box sx={{...style.modal}}>
+                    <Stack spacing={1}>
+                        <Typography variant='h5' sx={{margin: "0 0 0.7rem"}}>Check your credentials</Typography>
+                        <Typography variant='subtitle1'>{values.firstName} {values.lastName}</Typography>
+                        <Typography variant='subtitle1'>{values.email}</Typography>
+                        <Typography variant='subtitle1'>{values.regNo}</Typography>
+                        <Typography variant='subtitle1'>{values.dept}</Typography>
+                        <Button type='button' variant='outlined' onClick={handleSubmit}>Start Test</Button>
+                    </Stack>
+                </Box>
+            </Modal>
             <Grid container>
                 <Grid item>
                     <Item>
@@ -73,7 +122,7 @@ const LoginForm = () => {
                             name="lastName"
                             value={values.lastName}
                             onChange={handleInputChange}
-                            {...(errors ? { error: (errors.name ? true : false), helperText: errors.lastName } : false)}
+                            {...(errors ? { error: (errors.lastName ? true : false), helperText: errors.lastName } : false)}
                         />
                         <TextField
                             variant="outlined"
@@ -107,7 +156,7 @@ const LoginForm = () => {
                                 </MenuItem>
                             ))}
                         </TextField>
-                        <Button sx={{ margin: "1rem 0" }} type="submit" variant="contained">BEGIN TEST</Button>
+                        <Button sx={{ margin: "1rem 0" }} type="button" variant="contained" onClick={handleModalOpen}>BEGIN TEST</Button>
                     </Item>
                 </Grid>
             </Grid>

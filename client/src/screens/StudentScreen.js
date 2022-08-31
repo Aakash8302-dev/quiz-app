@@ -9,6 +9,7 @@ import { checkSubmission } from '../features/user';
 import { getTimer, setTimer } from '../features/timer'
 import Loader from '../components/Loader';
 import TestUnavailableScreen from './TestUnavailableScreen';
+import RulesScreen from './RulesScreen';
 
 
 const StudentScreen = () => {
@@ -17,7 +18,8 @@ const StudentScreen = () => {
     const dispatch = useDispatch();
 
     const [timerStarted, setTimerStarted] = useState("idle")
-    const [notify, setNotify] = useState("");
+    const [whenRefresh, setWhenRefresh] = useState("idle")
+    const [read, setRead] = useState(false)
 
     const userAnswer = useSelector((state) => state.user.userAnswer)
     const userInfo = useSelector((state) => state.user.value)
@@ -41,6 +43,11 @@ const StudentScreen = () => {
 
     useEffect(() => {
         checkTimerStatus();
+        if(whenRefresh !== "idle"){
+            setTimeout(()=>{
+                setTimerStarted("running")
+            }, whenRefresh)
+        }
     })
 
     const checkTimerStatus = () => {
@@ -48,13 +55,14 @@ const StudentScreen = () => {
         const time = Date.parse(new Date()) - Date.parse(startTime)
         const totalTime = Date.parse(endTime) - Date.parse(startTime)
 
-        if(time < 0)
+        if(time < 0){
             setTimerStarted("waiting")
+            setWhenRefresh(time*-1);
+        }
         else if(time>0 && time<totalTime )
             setTimerStarted("running")
         else if(time>0 && time>totalTime )
             setTimerStarted("completed")
-        
         
     }
 
@@ -62,9 +70,9 @@ const StudentScreen = () => {
         <Box>
             {   
                 endTime && timerStarted === "running" ? (
-                    userAnswer && userAnswer.exists === "submitted" ? (<PostSubmitScreen />) : endTime && endTime ?  (<TestScreen />) : <Loader />
+                    userAnswer && userAnswer.exists === "submitted" ? (<PostSubmitScreen />) : endTime && endTime ? ( read ? (<TestScreen />) : (<RulesScreen setRead={setRead} />) ): <Loader />
                 
-                ) : (timerStarted === "waiting") ? <TestUnavailableScreen title={"Test has not yet started..."} /> : (timerStarted === "completed") ? ( userAnswer && userAnswer.exists === "submitted" ? <PostSubmitScreen /> : <TestUnavailableScreen title={"Whoops..."} subTitle={"seems like test has completed"} />) : <Loader />
+                ) : (timerStarted === "waiting") ? ( read ? <TestUnavailableScreen title={"Test has not yet started..."} /> : <RulesScreen setRead={setRead} /> ): (timerStarted === "completed") ? ( userAnswer && userAnswer.exists === "submitted" ? <PostSubmitScreen /> : <TestUnavailableScreen title={"Whoops..."} subTitle={"seems like test has completed"} />) : <Loader />
             }
 
             

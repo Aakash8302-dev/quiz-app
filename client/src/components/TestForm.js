@@ -87,6 +87,15 @@ const style = {
     qImg: {
         width: "100px",
         height: "100px"
+    },
+    optionImg:{
+        width: "50%",
+        border: "solid 1px #000",
+        marginLeft: "2rem"
+    },
+    section:{
+        display: "flex",
+        alignItems: "flex-end"
     }
 };
 
@@ -157,9 +166,10 @@ const TestForm = ({ history, questions }) => {
                                             /{answers.length}
                                         </span>
                                     </Typography>
-                                    <Typography variant='h6' sx={{ fontWeight: "bold" }}>
-                                        {ques.questionCategory.toUpperCase()}
-                                    </Typography>
+                                    <Box component='div' sx={{...style.section}}>
+                                        <Typography variant='subtitle1'>{`SECTION`}</Typography>
+                                        <Typography sx={{margin: '0 0 0 10px'}} variant='h6'>{ques.questionCategory.toUpperCase()}</Typography>
+                                    </Box>
                                 </Box>
                                 <Box sx={{ ...style.questionContent }}>
                                     <Typography sx={{ ...style.questionText }} variant='h5'>
@@ -179,12 +189,20 @@ const TestForm = ({ history, questions }) => {
                                             sx={{ ...style.questionOption }}
                                         >
                                             {ques.options.map((op, j) => (
-                                                <FormControlLabel
+                                                <>
+                                                    <FormControlLabel
                                                     value={op.uid}
                                                     control={<Radio color='primary' />}
                                                     label={op.optionText}
                                                     sx={{ ...style.questionOption }}
-                                                />
+                                                    />
+                                                    {
+                                                        (op.optionImage) ? <Box>
+                                                        <img src={op.optionImage} alt={op.optionImage} style={{...style.optionImg}} />
+                                                        </Box> :  <Box></Box>
+                                                    }
+                                    
+                                                </>
                                             ))}
                                         </RadioGroup>
                                     </FormControl>

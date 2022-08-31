@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { Container, Grid, Typography, Stack, Box } from '@mui/material'
+import { Container, Grid, Typography, Stack, Box, Modal } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import LoginForm from '../components/LoginForm'
@@ -32,9 +32,10 @@ const LoginScreen = () => {
                 message: userRegisterStatus,
                 type: "error"
             })
-        }else if(userInfo && userInfo.token){
+        }else if(userInfo && userInfo.token && userInfo.role === "student" ){
             navigate("/student");
         }
+
     }, [userInfo, navigate, userRegisterStatus]);
 
     return (
@@ -42,7 +43,7 @@ const LoginScreen = () => {
             <Alert notify={notify} setNotify={setNotify} />
             <Grid item sm={12} sx={{ ...style.formWrap }}>
                 <Box component='div'>
-                    <Typography sx={{ textAlign: "center", margin: "2rem 0 3.5rem 0" }} variant='h4'>TEST</Typography>
+                    <Typography sx={{ textAlign: "center", margin: "2rem 0 3.5rem 0" }} variant='h4'>APTITUDE TEST</Typography>
                     <LoginForm />
                 </Box>
             </Grid>

@@ -73,6 +73,7 @@ const QuestionForm = ({
     changeQuestion,
     changeQuestionSetValue,
     changeOptionValue,
+    changeOptionImageValue,
     removeOption,
     addOption,
     handleSubmit,
@@ -178,6 +179,14 @@ const QuestionForm = ({
                             required={true}
                             value={ques.options[j].optionText.text}
                             onChange={(e) => changeOptionValue(e.target.value, i, j)}
+                        />
+                        <TextField
+                        name="optionImage"
+                        sx={{ ...style.previewImage }}
+                        variant='outlined'
+                        label='URL'
+                        value={ques.optionImage}
+                        onChange={(e) => changeOptionImageValue(e.target.value, i, j)}
                         />
                         <IconButton onClick={() => removeOption(i, j)}>
                             <Cancel style={{ color: '#F05454' }} />
