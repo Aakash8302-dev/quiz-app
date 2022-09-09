@@ -40,6 +40,13 @@ const style = {
         footer: {
             float: 'right',
             margin: "1.5rem 0 0"
+        },
+        alert:{
+            color: '#FF0000',
+            margin: '2px 0'
+        },
+        bold:{
+            fontWeight: "bolder"
         }
     },
 }
@@ -97,11 +104,12 @@ const LoginForm = () => {
                 <Box sx={{...style.modal}}>
                     <Stack spacing={1}>
                         <Typography variant='h5' sx={{margin: "0 0 0.7rem"}}>Check your credentials</Typography>
-                        <Typography variant='subtitle1'>{values.firstName} {values.lastName}</Typography>
-                        <Typography variant='subtitle1'>{values.email}</Typography>
-                        <Typography variant='subtitle1'>{values.regNo}</Typography>
-                        <Typography variant='subtitle1'>{values.dept}</Typography>
-                        <Button type='button' variant='outlined' onClick={handleSubmit}>Start Test</Button>
+                        <Typography variant='subtitle1'>Name : <span style={{...style.modal.bold}}>{values.firstName.toUpperCase()} {values.lastName.toUpperCase()}</span> </Typography>
+                        <Typography variant='subtitle1'>Email : <span style={{...style.modal.bold}}>{values.email}</span></Typography>
+                        <Typography variant='subtitle1'>Register No : <span style={{...style.modal.bold}}>{values.regNo}</span></Typography>
+                        <Typography variant='subtitle1'>Branch : <span style={{...style.modal.bold}}>{values.dept}</span></Typography>
+                        <Typography sx={{...style.modal.alert}} >Please make sure that you have entered valid credentials. You won't be able to make any further changes.</Typography>
+                        <Button type='button' variant='outlined' onClick={handleSubmit} sx={{...style.modal.button}} >Start Test</Button>
                     </Stack>
                 </Box>
             </Modal>

@@ -38,6 +38,10 @@ const allBranches = [
     {
         id: 10,
         value: "Mechanical Engineering"
+    },
+    {
+        id: 11,
+        value: "AI & DS"
     }
 ]
 
@@ -78,6 +82,10 @@ const branches = [
     {
         id: 9,
         value: "Mechanical Engineering"
+    },
+    {
+        id: 10,
+        value: "AI & DS"
     }
 ]
 
