@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Container as Box, Grid } from '@mui/material'
+import { Container as Box, Grid, Typography } from '@mui/material'
 import { getSetting } from '../features/setting';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import FeedbackForm from '../components/FeedbackForm'
 import UserResult from '../components/UserResult';
 import UserAnswer from '../components/UserAnswer';
@@ -14,6 +14,10 @@ const style = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
+    },
+    thankYou:{
+        textAlign: "center",
+        justifyContent: "center"
     }
 }
 
@@ -27,6 +31,8 @@ const PostSubmitScreen = () => {
     })
 
     const [component, setComponent] = useState("resultFeedback")
+    const userAnswer = useSelector(state => state.user.userAnswer)
+    const feedbackStatus = userAnswer.feedbackStatus
 
 
     const resultFeedback =
@@ -35,7 +41,9 @@ const PostSubmitScreen = () => {
                 <UserResult setComponent={setComponent} />
             </Grid>
             <Grid item md={6} xs={12} sx={{ ...style.sectionWrap }}>
-                <FeedbackForm />
+                {feedbackStatus==="submitted" ? <Box style={{...style.thankYou}}>
+                    <Typography variant='h4'>Thanks for your feedback</Typography>
+                </Box> : <FeedbackForm />  }
             </Grid>
         </Grid>
 

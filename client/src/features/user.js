@@ -119,7 +119,7 @@ export const getLeaderBoard = createAsyncThunk('/user/leaderBoard', async (answe
 export const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: { },
+    reducers: {},
     extraReducers(builder) {
         builder.addCase(userRegister.pending, (state, action) => {
             state.status = "loading"

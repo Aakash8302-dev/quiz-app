@@ -308,15 +308,22 @@ const checkSubmission = asyncHandler(async (req, res) => {
 
     try {
         const answer = await UserAnswer.find({ regNo: req.user.regNo })
+        const feedback = await UserFeedback.find({regNo: req.user.regNo})
+
+        let feedbackStatus = null;
+
+        feedback.length > 0 ? feedbackStatus = "submitted" :  feedbackStatus = "notSubmitted"
 
         if (answer.length > 0) {
             res.status(200).json({
                 exists: "submitted",
+                feedbackStatus,
                 answer
             })
         } else {
             res.status(200).json({
-                exists: "notSubmitted"
+                exists: "notSubmitted",
+                feedbackStatus
             })
         }
     } catch (error) {

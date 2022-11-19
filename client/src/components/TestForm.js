@@ -148,7 +148,7 @@ const TestForm = ({ history, questions }) => {
                         Do you want to submit ?
                     </Typography>
                     <Box sx={{ ...style.modal.footer }} >
-                        <Button>No</Button>
+                        <Button onClick={handleModalClose}>No</Button>
                         <Button variant="contained" onClick={handleFormSubmit}>Yes</Button>
                     </Box>
                 </Box>
