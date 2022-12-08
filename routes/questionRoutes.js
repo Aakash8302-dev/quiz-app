@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/').get(protect, getTestQuestions);
 
-router.route('/all').get(protect, authAdmin, getCreatedQuestions)
+router.route('/all').get(getCreatedQuestions)
 
 router.route('/create')
     .post(protect, authAdmin, createQuestion)

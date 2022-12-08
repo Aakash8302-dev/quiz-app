@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Container, Paper, Box, Typography, TextField, MenuItem } from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllQuestions } from '../features/question'
 import { fontWeight } from '@mui/system'
-import { commonCategory } from '../data'
+import { commonCategory, qSetValue, branches } from '../data'
 import Loader from '../components/Loader'
 
 const styles = {
@@ -31,7 +32,9 @@ const QuestionScreen = () => {
     const dispatch = useDispatch();
 
     const [filteredQuestion, setFilteredQuestions] = useState([]);
-    const [qCategory, setQCatergory] = useState("Core")
+    const [qCategory, setQCategory] = useState("Core")
+    const [qSet, setQuestionSet] = useState("1")
+    const [qDept, setQDept] = useState("Information Technology");
 
     const allQuestions = useSelector((state) => state.question.allQuestions)
     const allQuestionStatus = useSelector((state) => state.question.status)
@@ -42,10 +45,18 @@ const QuestionScreen = () => {
 
     useEffect(() => {
         if (allQuestions && allQuestions.length > 0) {
+
             let result = allQuestions.filter((q) => q.questionCategory === qCategory)
+
+            if(qCategory === "Core"){
+                result = result.filter((q) => q.questionDept === qDept)
+            }else{
+                result = result.filter((q) => q.questionSet === qSet)
+            }
+            
             setFilteredQuestions(result)
         }
-    }, [qCategory])
+    }, [qCategory,qSet, qDept,allQuestions])
 
     return (
         <Container>
@@ -56,7 +67,7 @@ const QuestionScreen = () => {
                     size="small"
                     label="Category"
                     value={qCategory}
-                    onChange={(e) => setQCatergory(e.target.value)}
+                    onChange={(e) => setQCategory(e.target.value)}
                     sx={{ width: "8rem" }}
                 >
                     {commonCategory.map((e) => (
@@ -65,10 +76,53 @@ const QuestionScreen = () => {
                         </MenuItem>
                     ))}
                 </TextField>
+                {
+                    qCategory && qCategory === "Core" ? <>
+                         <TextField
+                            select
+                            variant='outlined'
+                            size='small'
+                            label="department"
+                            value={qDept}
+                            onChange={(e) => setQDept(e.target.value)}
+                            sx={{ width: "8rem" }}
+                        >
+                            {
+                                branches.map((e) => (
+                                    <MenuItem key={e.id} value={e.value} sx={{minWidth:10}}>
+                                        {e.value}
+                                    </MenuItem>
+                                ))
+                            }
+                        </TextField>
+                    </> : <>
+                        <TextField
+                            select
+                            variant='outlined'
+                            size='small'
+                            label="set"
+                            value={qSet}
+                            onChange={(e) => setQuestionSet(e.target.value)}
+                            sx={{ width: "8rem" }}
+                        >
+                            {
+                                qSetValue.map((e) => (
+                                    <MenuItem key={e.id} value={e.value} sx={{minWidth:10}}>
+                                        {e.value}
+                                    </MenuItem>
+                                ))
+                            }
+                        </TextField>
+                    </>
+                }
+                
+                <Typography variant='h6'>Count :{filteredQuestion.length}</Typography>
+
             </Box>
             {allQuestionStatus === "loading" ? (<Loader />) : (
                 filteredQuestion.map((e, index) => (
-                    <Paper elevation={3} key={index} sx={{ margin: "0.5rem 0" }}>
+                    <Link to={`/admin?screen=a6&id=${e._id}`} style={{textDecoration: "none"}} target="_blank">
+                    <Paper elevation={3} key={index} sx={{ margin: "1rem 0" }}>
                         <Box sx={{ ...styles.questionBox }}>
                             <Typography variant='h6'>{e.questionTitle}</Typography>
                             <Box sx={{ ...styles.footer }}>
@@ -85,6 +139,7 @@ const QuestionScreen = () => {
                             </Box>
                         </Box>
                     </Paper>
+                    </Link>
                 ))
             )
             }

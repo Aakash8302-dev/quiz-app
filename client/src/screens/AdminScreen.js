@@ -10,14 +10,23 @@ import SettingScreen from './SettingScreen'
 import Loader from '../components/Loader'
 import { getSetting } from '../features/setting'
 import {getTimer} from '../features/timer'
+import IndividualQuestionScreen from './IndividualQuestionScreen'
 
 const AdminScreen = () => {
-
+    
     const dispatch = useDispatch();
 
-    const currpath = window.location.href;
+    const currpath = window.location.search;
 
-    var screen = currpath.split('=')[1];
+    const value = currpath.split("&");
+    
+    const values = []
+
+    value.map(val => values.push(val.split("=")[1] ))
+
+    var screen = values[0];
+    var id = values[1] && values[1];
+    
 
     const navigate = useNavigate();
     const userInfo = useSelector((state) => state.user.value);
@@ -26,7 +35,6 @@ const AdminScreen = () => {
     const timer = useSelector((state) => state.timer.status);
     const initialStartTime = useSelector((state) => state.timer.startTime)
     const initialEndTime = useSelector((state) => state.timer.endTime)
-
 
     useEffect(() => {
 
@@ -52,6 +60,8 @@ const AdminScreen = () => {
                 return <QuestionScreen />
             case 'a5':
                 return <SettingScreen />
+            case 'a6':
+                return <IndividualQuestionScreen id={id} />
             default:
                 return <div>Not Found</div>
         }
