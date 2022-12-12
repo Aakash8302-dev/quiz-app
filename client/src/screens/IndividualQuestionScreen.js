@@ -160,7 +160,7 @@ const IndividualQuestionScreen = () => {
                                     )}
                                     <FormControl sx={{ ...style.questionOptionsWrap }}>
                                         <RadioGroup
-                                            value={ques.userAnswer}
+                                            value={ques.correctAnswer}
                                             sx={{ ...style.questionOption }}
                                         >
                                             {ques.options.map((op, j) => (
@@ -181,7 +181,7 @@ const IndividualQuestionScreen = () => {
                                                 </>
                                             ))}
                                         </RadioGroup>
-                                    </FormControl>
+                                    </FormControl>  
                                 </Box>
                             </Box>
                         ) : (
