@@ -28,7 +28,6 @@ const style = {
     questionContent: {
         margin: '2rem 0',
         minHeight: '55vh',
-        maxWidth: "80%"
     },
     questionText: {
         fontFamily: "'Poppins', sans-serif",
@@ -174,7 +173,13 @@ const TestForm = ({ history, questions }) => {
                                 </Box>
                                 <Box sx={{ ...style.questionContent }}>
                                     <Typography sx={{ ...style.questionText }} variant='h5'>
-                                        <pre>{ques.questionTitle}</pre>
+                                    <pre style={{
+                                              whiteSpace: "-moz-pre-wrap", /* Mozilla, supported since 1999 */
+                                              whiteSpace: "-pre-wrap", /* Opera */
+                                              whiteSpace: "-o-pre-wrap", /* Opera */
+                                              whiteSpace: "pre-wrap", /* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
+                                              wordWrap: "break-word", /* IE 5.5+ */
+                                        }}>{ques.questionTitle}</pre>
                                     </Typography>
                                     {ques.imageUrl && (
                                         <img
