@@ -27,6 +27,7 @@ const style = {
     questionContent: {
         margin: '2rem 0',
         minHeight: '55vh',
+        maxWidth: "80%"
     },
     questionText: {
         fontFamily: "'Poppins', sans-serif",
