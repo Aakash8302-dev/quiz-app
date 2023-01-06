@@ -149,7 +149,7 @@ const IndividualQuestionScreen = () => {
                                 </Box>
                                 <Box sx={{ ...style.questionContent }}>
                                     <Typography sx={{ ...style.questionText }} variant='h5'>
-                                        {ques.questionTitle}
+                                        <pre>{ques.questionTitle}</pre>
                                     </Typography>
                                     {ques.imageUrl && (
                                         <img

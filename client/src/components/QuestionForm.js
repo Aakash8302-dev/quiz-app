@@ -3,7 +3,7 @@ import { TextField, Paper, MenuItem, RadioGroup, FormControlLabel, Button, IconB
 import { Delete, Cancel } from '@mui/icons-material';
 import { Form, useForm } from './useForm'
 import { commonCategory, specificCategory, allBranches, qSetValue } from '../data';
-
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 const style = {
     root: {
@@ -15,8 +15,9 @@ const style = {
         flexDirection: 'column',
     },
     question: {
-        margin: '0.5rem 0',
-        width: '93%',
+        margin: '1rem 0',
+        width: "100%",
+        height: "5rem"
     },
     questionWrap: {
         display: 'flex',
@@ -140,9 +141,11 @@ const QuestionForm = ({
                     ))}
                 </TextField>
                 <Box sx={{ ...style.questionWrap }} >
-                    <TextField
+                    <TextareaAutosize
                         name="question"
-                        sx={{ ...style.question }}
+                        sx={{...style.question}}
+                        style={{width: 1000, margin: "1rem 0"}}
+                        minRows={10}
                         id='outlined-with-placeholder'
                         value={ques.questionText}
                         variant='outlined'
@@ -160,7 +163,7 @@ const QuestionForm = ({
                         onChange={(e) => changeImageUrl(e.target.value, i)}
                     />
                 </Box>
-
+                                    
                 {ques.options.map((op, j) => (
                     <Box key={j} sx={{ ...style.option }}>
                         <RadioGroup
