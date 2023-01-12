@@ -18,6 +18,7 @@ export const createQuestion = createAsyncThunk('/question/create', async (questi
     var { user: { value } } = thunkAPI.getState()
     var userInfo = value.token
 
+ 
     const {
         questionDept,
         questionSet,
@@ -27,6 +28,9 @@ export const createQuestion = createAsyncThunk('/question/create', async (questi
         correctAnswer,
         imageUrl
     } = question
+
+    console.log(imageUrl);
+
 
     const { data } = await axios.post('/api/question/create', { questionDept, questionSet, questionTitle, questionCategory, options, correctAnswer, imageUrl }, {
         headers: {

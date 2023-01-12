@@ -4,6 +4,7 @@ import { Delete, Cancel } from '@mui/icons-material';
 import { Form, useForm } from './useForm'
 import { commonCategory, specificCategory, allBranches, qSetValue } from '../data';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
+import FileBase64 from 'react-file-base64';
 
 const style = {
     root: {
@@ -154,13 +155,17 @@ const QuestionForm = ({
                         placeholder='Enter your Question'
                         onChange={(e) => changeQuestion(e.target.value, i)}
                     />
-                    <TextField
+                    {/* <TextField
                         name="imgUrl"
                         sx={{ ...style.previewImage }}
                         variant='outlined'
                         label='URL'
                         value={ques.imageUrl}
                         onChange={(e) => changeImageUrl(e.target.value, i)}
+                    /> */}
+                    <FileBase64
+                        multiple={false}    
+                        onDone={({base64}) => changeImageUrl(base64, i)}
                     />
                 </Box>
                                     
@@ -183,13 +188,18 @@ const QuestionForm = ({
                             value={ques.options[j].optionText.text}
                             onChange={(e) => changeOptionValue(e.target.value, i, j)}
                         />
-                        <TextField
+                        {/* <TextField
                         name="optionImage"
                         sx={{ ...style.previewImage }}
                         variant='outlined'
                         label='URL'
                         value={ques.optionImage}
                         onChange={(e) => changeOptionImageValue(e.target.value, i, j)}
+                        /> */}
+                        <FileBase64
+                            style={{...style.previewImage}}
+                            multiple={false}    
+                            onDone={({base64}) => changeOptionImageValue(base64,i, j)}
                         />
                         <IconButton onClick={() => removeOption(i, j)}>
                             <Cancel style={{ color: '#F05454' }} />
