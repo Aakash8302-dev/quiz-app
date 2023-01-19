@@ -119,7 +119,6 @@ const TestForm = ({ history, questions }) => {
             if(count == 6){
                 window.alert("MALPRACTICE DETECTED");
                 handleFormSubmit();
-                dispatch(userLogout());
             }else if(count < 6){
                 window.alert(`Tab switch count :${count} `);
             }
@@ -134,7 +133,7 @@ const TestForm = ({ history, questions }) => {
         }
 
         return () => {
-            
+
             window.removeEventListener("blur", handleTabSwitches);
         }
 
