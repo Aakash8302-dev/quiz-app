@@ -12,6 +12,7 @@ import {
     Fab,
     Modal
 } from '@mui/material';
+import beep from "../images/beep.mp3"
 import { submitAnswers } from '../features/question';
 import { userLogout } from '../features/user';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
@@ -113,11 +114,13 @@ const TestForm = ({ history, questions }) => {
     const [trigTimer, setTrigTimer] = useState(false)
     let [count, setCount] = useState(0);
 
+    let audio = new Audio(beep);
 
     const handleTabSwitches = () => {
             setCount(count++);
             if(count == 6){
                 window.alert("MALPRACTICE DETECTED");
+                audio.play();
                 handleFormSubmit();
             }else if(count < 6){
                 window.alert(`Tab switch count :${count} `);
