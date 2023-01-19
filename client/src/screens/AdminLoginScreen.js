@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Container, Grid } from '@mui/material'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import AdminLoginForm from '../components/AdminLoginForm'

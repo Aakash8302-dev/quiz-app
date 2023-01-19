@@ -45,13 +45,12 @@ export const createQuestion = createAsyncThunk('/question/create', async (questi
     }
 })
 
-export const submitAnswers = createAsyncThunk('/question/submit', async (answers, thunkAPI) => {
-
+export const submitAnswers = createAsyncThunk('/question/submit', async ({answers,count}, thunkAPI) => {
 
     var { user: { value } } = thunkAPI.getState()
     var userInfo = value.token
 
-    const { data } = await axios.post('/api/question/submit', { answers }, {
+    const { data } = await axios.post('/api/question/submit', { answers,count }, {
         headers: {
             Authorization: `Bearer ${userInfo}`,
         },

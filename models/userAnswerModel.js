@@ -68,6 +68,9 @@ const userAnswerSchema = mongoose.Schema({
             },
         },
     ],
+    tabSwitches:{
+        type: Number
+    }
 });
 
 const UserAnswer = mongoose.model('UserAnswer', userAnswerSchema);

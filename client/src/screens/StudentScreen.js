@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import TestScreen from './TestScreen';
 import { Box } from '@mui/system';
-import axios from 'axios';
 import PostSubmitScreen from './PostSubmitScreen';
 import { checkSubmission } from '../features/user';
-import { getTimer, setTimer } from '../features/timer'
+import { getTimer} from '../features/timer'
 import Loader from '../components/Loader';
 import TestUnavailableScreen from './TestUnavailableScreen';
 import RulesScreen from './RulesScreen';

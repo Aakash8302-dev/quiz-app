@@ -1,7 +1,7 @@
-import React,{useState, useEffect} from 'react'
-import { Container, Typography, Switch, FormControl, FormControlLabel, Button, Box, Stack, TextField } from '@mui/material'
+import React,{useState} from 'react'
+import { Container, Typography, Switch, FormControl, FormControlLabel, Button, Box,TextField } from '@mui/material'
 import {useSelector, useDispatch} from 'react-redux'
-import { createSetting, getSetting } from '../features/setting'
+import { createSetting} from '../features/setting'
 import Loader from '../components/Loader'
 
 const style = {

@@ -64,8 +64,6 @@ export const userLogout = createAsyncThunk('/user/logout', async (answers, thunk
     var { user: { value } } = thunkAPI.getState()
     var userInfo = value.token
 
-    console.log(userInfo)
-
     const { data } = await axios.post('/api/user/logout',{}, {
         headers: {
             Authorization: `Bearer ${userInfo}`,

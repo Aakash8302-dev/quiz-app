@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Paper, Box, Typography, TextField, MenuItem } from "@mui/material"
+import Container from "@mui/material/Container"
+import Paper from "@mui/material/Paper"
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography"
+import TextField from "@mui/material/TextField"
+import MenuItem from "@mui/material/MenuItem"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllQuestions } from '../features/question'
-import { fontWeight } from '@mui/system'
 import { commonCategory, qSetValue, branches } from '../data'
 import Loader from '../components/Loader'
 

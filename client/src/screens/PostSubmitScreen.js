@@ -24,7 +24,9 @@ const style = {
 
 const PostSubmitScreen = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    let [count, setCount] = useState(0);
 
     useEffect(() => {
         dispatch(getSetting());

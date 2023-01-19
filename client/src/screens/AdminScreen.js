@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Container, Box, Grid } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import LeaderBoardScreen from './LeaderBoardScreen'
 import CreateScreen from './CreateScreen'

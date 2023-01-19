@@ -13,6 +13,7 @@ import {
     Modal
 } from '@mui/material';
 import { submitAnswers } from '../features/question';
+import { userLogout } from '../features/user';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import Timer from './Timer'
 
@@ -110,11 +111,31 @@ const TestForm = ({ history, questions }) => {
     const [open, setOpen] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [trigTimer, setTrigTimer] = useState(false)
+    let [count, setCount] = useState(0);
+
+
+    const handleTabSwitches = () => {
+            setCount(count++);
+            if(count == 6){
+                window.alert("MALPRACTICE DETECTED");
+                handleFormSubmit();
+                dispatch(userLogout());
+            }else if(count < 6){
+                window.alert(`Tab switch count :${count} `);
+            }
+    }
 
     useEffect(() => {
 
+        window.addEventListener("blur", handleTabSwitches)
+
         if(trigTimer){
-            handleFormSubmit();
+            handleFormSubmit(count);
+        }
+
+        return () => {
+            
+            window.removeEventListener("blur", handleTabSwitches);
         }
 
     },[trigTimer])
@@ -131,7 +152,7 @@ const TestForm = ({ history, questions }) => {
 
     const handleFormSubmit = async () => {
         setOpen(false);
-        dispatch(submitAnswers(answers))
+        dispatch(submitAnswers({answers,count}))
     };
 
     return (

@@ -135,7 +135,9 @@ const getTestQuestions = asyncHandler(async (req, res) => {
 const submitAnswers = asyncHandler(async (req, res) => {
     try {
 
-        const { answers } = req.body;
+        const { answers, count } = req.body;
+
+        count ? count : null;
 
         var score = 0;
         var coreScore = 0;
@@ -170,7 +172,8 @@ const submitAnswers = asyncHandler(async (req, res) => {
             verbalScore,
             codingScore,
             coreScore,
-            answers
+            answers,
+            tabSwitches: count
         });
 
         if (newUserAnswer) {
@@ -184,6 +187,8 @@ const submitAnswers = asyncHandler(async (req, res) => {
         res.status(500).json({
             error: error.message
         });
+
+        console.log(error.message);
     }
 })
 

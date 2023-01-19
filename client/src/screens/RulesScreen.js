@@ -1,14 +1,20 @@
-import React,{useEffect} from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux';
-import { Button, Container, Grid, Typography } from '@mui/material';
+import React from 'react'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+
 
 const style = {
   root:{
-      padding: "1rem"
+      padding: "3rem 0rem "
   },
   li:{
       margin: "1.5rem"
+  },
+  startButton:{
+    margin: "5rem 0",
+    textAlign: "center"
   }
 }
 
@@ -21,7 +27,7 @@ const RulesScreen = ({setRead}) => {
   return (
     <Container>
     <Grid container>
-    <Grid item>
+    <Grid item sx={{...style.root}}>
         <Typography variant='h5'>Rules and Regulations</Typography>
         <Typography variant='subtitle1'>
             <ol>
@@ -34,12 +40,11 @@ const RulesScreen = ({setRead}) => {
                 <li  style={{...style.li}}>1 point is granted for every correct answer. There is no negative marking.</li>
                 <li  style={{...style.li}}>All questions are compulsory.</li>
                 <li  style={{...style.li}}>The Test will auto-submit when the timer ends</li>
-                <li  style={{...style.li}}>You will be able to view your total score as well as the correct answers once the test ends</li>
             </ol>
         </Typography>
        
     </Grid>
-    <Button variant='contained' onClick={handleFinishRules}>Start Test</Button>
+    <Button sx={{...style.startButton}} variant='contained' onClick={handleFinishRules}>Start Test</Button>
 </Grid>
 </Container>   
   )
