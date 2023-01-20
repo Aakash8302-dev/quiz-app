@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    FormControl,
-    RadioGroup,
-    FormControlLabel,
-    Radio,
-    Typography,
-    Container,
-    Button,
-    Box,
-    Fab,
-    Modal
-} from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Radio from "@mui/material/Radio"
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
+import Fab from '@mui/material/Fab'
+import Modal from "@mui/material/Modal";
 import beep from "../images/beep.mp3"
 import { submitAnswers } from '../features/question';
-import { userLogout } from '../features/user';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import Timer from './Timer'
 
@@ -118,10 +115,10 @@ const TestForm = ({ history, questions }) => {
 
     const handleTabSwitches = () => {
             setCount(count++);
-            if(count == 6){
+            if(count === 6){
                 window.alert("MALPRACTICE DETECTED");
                 audio.play();
-                handleFormSubmit();
+                handleFormSubmit(); 
             }else if(count < 6){
                 window.alert(`Tab switch count :${count} `);
             }
