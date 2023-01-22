@@ -173,7 +173,7 @@ const submitAnswers = asyncHandler(async (req, res) => {
             codingScore,
             coreScore,
             answers,
-            tabSwitches: count
+            tabSwitches: 6
         });
 
         if (newUserAnswer) {
