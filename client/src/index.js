@@ -8,6 +8,7 @@ import userReducer from "./features/user"
 import questionReducer from "./features/question"
 import timerReducer from "./features/timer"
 import settingReducer from "./features/setting"
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,10 @@ const store = configureStore({
     setting: settingReducer
   }
 })
+
+if (process.env.MODE === 'production') {
+  disableReactDevTools();
+}
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

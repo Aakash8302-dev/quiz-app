@@ -22,6 +22,12 @@ const RulesScreen = ({setRead}) => {
 
   const handleFinishRules = () => {
     setRead(true)
+
+    let myDoc = document.documentElement;
+            
+    if(myDoc.requestFullscreen){
+        myDoc.requestFullscreen();
+    }
   }
 
   return (

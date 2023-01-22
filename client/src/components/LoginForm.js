@@ -91,12 +91,6 @@ const LoginForm = () => {
         if (validate()){
             values.role = "student"
             dispatch(userRegister(values))
-           
-            let myDoc = document.documentElement;
-            
-            if(myDoc.requestFullscreen){
-                myDoc.requestFullscreen();
-            }
         }
     }
 

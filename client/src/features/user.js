@@ -121,6 +121,8 @@ export const userSlice = createSlice({
     extraReducers(builder) {
         builder.addCase(userRegister.pending, (state, action) => {
             state.status = "loading"
+            state.error = null
+            state.userRegisterStatus = null
         }).addCase(userRegister.fulfilled, (state, action) => {
             state.status = "succeeded"
             state.value = action.payload

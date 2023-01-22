@@ -31,7 +31,7 @@ const Timer = ({ endTime, setTrigTimer }) => {
         if (completed) {
             setTrigTimer(true)
         } else {
-            return <span>{minutes} : {seconds}</span>
+            return <span>{hours} : {minutes} : {seconds}</span>
         }
     }
 
