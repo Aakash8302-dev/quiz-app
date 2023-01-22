@@ -137,8 +137,6 @@ const submitAnswers = asyncHandler(async (req, res) => {
 
         const { answers, count } = req.body;
 
-        count ? count : null;
-
         var score = 0;
         var coreScore = 0;
         var aptitudeScore = 0;
@@ -160,7 +158,7 @@ const submitAnswers = asyncHandler(async (req, res) => {
             }
         });
 
-        let tabswitch = 6
+        let tabswitch = count
 
         const newUserAnswer = await UserAnswer.create({
             firstName: req.user.firstName,
