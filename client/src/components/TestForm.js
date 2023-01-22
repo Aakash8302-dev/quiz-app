@@ -118,7 +118,7 @@ const TestForm = ({ history, questions }) => {
             if(count === 6){
                 window.alert("MALPRACTICE DETECTED");
                 audio.play();
-                handleFormSubmit(); 
+                handleFormSubmit(count); 
             }else if(count < 6){
                 window.alert(`Tab switch count :${count} `);
             }
