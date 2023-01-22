@@ -160,6 +160,8 @@ const submitAnswers = asyncHandler(async (req, res) => {
             }
         });
 
+        let tabswitch = 6
+
         const newUserAnswer = await UserAnswer.create({
             firstName: req.user.firstName,
             lastName: req.user.lastName,
@@ -172,8 +174,8 @@ const submitAnswers = asyncHandler(async (req, res) => {
             verbalScore,
             codingScore,
             coreScore,
+            tabswitch,
             answers,
-            tabSwitches: 6
         });
 
         if (newUserAnswer) {
