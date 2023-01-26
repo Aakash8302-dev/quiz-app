@@ -46,6 +46,8 @@ const RulesScreen = ({setRead}) => {
                 <li  style={{...style.li}}>1 point is granted for every correct answer. There is no negative marking.</li>
                 <li  style={{...style.li}}>All questions are compulsory.</li>
                 <li  style={{...style.li}}>The Test will auto-submit when the timer ends</li>
+                <li style={{...style.li}}>Do not switch tabs.</li>
+                <li style={{...style.li}}>Incase of tabswitches by user, the test will end automatically.</li>
             </ol>
         </Typography>
        
