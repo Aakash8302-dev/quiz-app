@@ -57,7 +57,7 @@ export const submitAnswers = createAsyncThunk('/question/submit', async ({answer
     })
 
     if (data.error) {
-        throw new Error(data.error)
+            throw new Error(data.error)
     } else {
         return data
     }
@@ -106,7 +106,7 @@ export const questionSlice = createSlice({
             state.submitStatus = "succeeded"
             state.answer = action.payload
         }).addCase(submitAnswers.rejected, (state, action) => {
-            state.status = "failed"
+            state.status = "succeeded"
             state.submitStatus = "failed"
             state.error = action.error.message
         }).addCase(getAllQuestions.pending, (state, action) => {
