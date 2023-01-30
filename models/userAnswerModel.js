@@ -38,39 +38,7 @@ const userAnswerSchema = mongoose.Schema({
     },
     tabswitch:{
         type: Number
-    },
-    answers: [
-        {
-            questionTitle: {
-                type: String,
-            },
-            questionSet: {
-                type: String,
-            },
-            questionDept: {
-                type: String,
-            },
-            questionCategory: {
-                type: String,
-            },
-            options: [
-                {
-                    optionText: {
-                        type: String,
-                    },
-                    uid: {
-                        type: String,
-                    },
-                },
-            ],
-            userAnswer: {
-                type: String,
-            },
-            correctAnswer: {
-                type: String,
-            },
-        },
-    ],
+    }
 });
 
 const UserAnswer = mongoose.model('UserAnswer', userAnswerSchema);

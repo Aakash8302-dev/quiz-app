@@ -50,7 +50,29 @@ export const submitAnswers = createAsyncThunk('/question/submit', async ({answer
     var { user: { value } } = thunkAPI.getState()
     var userInfo = value.token
 
-    const { data } = await axios.post('/api/question/submit', { answers,count }, {
+    var score = 0;
+    var coreScore = 0;
+    var aptitudeScore = 0;
+    var verbalScore = 0;
+    var codingScore = 0;
+
+    answers.map((e) => {
+        if (e.correctAnswer === e.userAnswer) {
+            score = score + 1;
+            if (e.questionCategory === 'Aptitude') {
+                aptitudeScore = aptitudeScore + 1;
+            } else if (e.questionCategory === 'Verbal') {
+                verbalScore = verbalScore + 1;
+            } else if (e.questionCategory === 'Coding') {
+                codingScore = codingScore + 1;
+            } else if (e.questionCategory === 'Core') {
+                coreScore = coreScore + 1;
+            }
+        }
+    });
+
+
+    const { data } = await axios.post('/api/question/submit', {aptitudeScore,verbalScore,codingScore,coreScore,score,count}, {
         headers: {
             Authorization: `Bearer ${userInfo}`,
         },

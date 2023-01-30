@@ -135,28 +135,8 @@ const getTestQuestions = asyncHandler(async (req, res) => {
 const submitAnswers = asyncHandler(async (req, res) => {
     try {
 
-        const { answers, count } = req.body;
+        const { aptitudeScore,verbalScore,codingScore,coreScore, score,count } = req.body;
 
-        var score = 0;
-        var coreScore = 0;
-        var aptitudeScore = 0;
-        var verbalScore = 0;
-        var codingScore = 0;
-
-        answers.map((e) => {
-            if (e.correctAnswer === e.userAnswer) {
-                score = score + 1;
-                if (e.questionCategory === 'Aptitude') {
-                    aptitudeScore = aptitudeScore + 1;
-                } else if (e.questionCategory === 'Verbal') {
-                    verbalScore = verbalScore + 1;
-                } else if (e.questionCategory === 'Coding') {
-                    codingScore = codingScore + 1;
-                } else if (e.questionCategory === 'Core') {
-                    coreScore = coreScore + 1;
-                }
-            }
-        });
 
         let tabswitch = count
 
@@ -173,7 +153,6 @@ const submitAnswers = asyncHandler(async (req, res) => {
             codingScore,
             coreScore,
             tabswitch,
-            answers,
         });
 
         if (newUserAnswer) {
